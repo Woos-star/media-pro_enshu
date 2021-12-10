@@ -1,9 +1,9 @@
 
 public class GameManager{
-	// ƒQ[ƒ€‘S‘Ì‚Å•K—v‚È•Ï”‚Æ‚©‚Í‚±‚±‚É•Û‚·‚é‚Æ‚¢‚¢‚Å‚µ‚å‚¤
-	// —áF‹N“®‚µ‚Ä‚©‚ç‚ÌŠÔ‚È‚Ç
+	// ã‚²ãƒ¼ãƒ å…¨ä½“ã§å¿…è¦ãªå¤‰æ•°ã¨ã‹ã¯ãŠã£ã“ã«ä¿æŒã™ã‚‹ã¨ã„ã„ã§ã—ã‚‡ã†
+	// ä¾‹ï¼›èµ·å‹•ã—ã¦ã‹ã‚‰ã®æ™‚é–“ãªã©
 	
-	// ƒ‚[ƒhØ‘Ö—p
+	// s
 	private ModeState _modeState = null;
 	public ModeState State(){return _modeState;}
 
@@ -12,20 +12,20 @@ public class GameManager{
 		init();
 	}
 	
-	// ‰Šú‰»—p
+	// s
 	public void init()
 	{
-		// Å‰‚Íƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
+		// s
 		_modeState = new TitleState();
 	}
 	
-	// ƒ‚[ƒh•ÏX—p
+	// s
 	public void ChangeMode(ModeState mode)
 	{
 		_modeState = mode;
 	}
 
-	// ƒƒCƒ“ˆ—•”
+	// ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void GameMainUpdate()
 	{
 		_modeState.run(this);

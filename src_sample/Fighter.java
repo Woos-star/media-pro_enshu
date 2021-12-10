@@ -1,24 +1,21 @@
 /*
- * ì¬“ú: 2004/08/24
+
  *
- * ‚±‚Ì¶¬‚³‚ê‚½ƒRƒƒ“ƒg‚Ì‘}“ü‚³‚ê‚éƒeƒ“ƒvƒŒ[ƒg‚ğ•ÏX‚·‚é‚½‚ß
- * ƒEƒBƒ“ƒhƒE > İ’è > Java > ƒR[ƒh¶¬ > ƒR[ƒh‚ÆƒRƒƒ“ƒg
+ * s
  */
 
 /**
  * @author Administrator
  *
- * ‚±‚Ì¶¬‚³‚ê‚½ƒRƒƒ“ƒg‚Ì‘}“ü‚³‚ê‚éƒeƒ“ƒvƒŒ[ƒg‚ğ•ÏX‚·‚é‚½‚ß
- * ƒEƒBƒ“ƒhƒE > İ’è > Java > ƒR[ƒh¶¬ > ƒR[ƒh‚ÆƒRƒƒ“ƒg
  */
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
 public class Fighter extends BaseObject{
-	protected int nLeft;	// c‹@”
+	protected int nLeft;	// æ®‹æ©Ÿæ•°
 
-	// ƒL[“ü—Í‚Ìƒtƒ‰ƒO
+	// ã‚­ãƒ¼å…¥åŠ›ã®ãƒ•ãƒ©ã‚°
 	protected boolean bKeyLeft;
 	protected boolean bKeyRight;
 	protected boolean bKeyUp;
@@ -30,23 +27,23 @@ public class Fighter extends BaseObject{
 	public final static int KB_PUSH	= 	2;
 	public final static int KB_PULL	=	3;
 
-	private int numShot;	// ‰æ–Ê•\¦ƒVƒ‡ƒbƒg—Ê
-	private int numValidShot; // Œ»İì‚ê‚éƒVƒ‡ƒbƒg”
+	private int numShot;	// ç”»é¢è¡¨ç¤ºã‚·ãƒ§ãƒƒãƒˆ
+	private int numValidShot; // ç¾åœ¨ä½œã‚Œã‚‹ã‚·ãƒ§ãƒƒãƒˆæ•°
 	private int shotTimer = 0;
 
 	private Shot shot[];
 
-	// “à•”ƒNƒ‰ƒX‰»‚³‚ê‚½©‹@ƒVƒ‡ƒbƒgŠÇ—ƒNƒ‰ƒX
-	// –í“¬‹@‚ÍƒVƒ‡ƒbƒg¶¬‚¾‚¯‚ğó‚¯‚¿BˆÚ“®‚ÍƒVƒ‡ƒbƒg©g‚ªs‚¤
+	// å†…éƒ¨ã‚¯ãƒ©ã‚¹ã‹ã•ã‚ŒãŸæ™‚æœŸã‚·ãƒ§ãƒƒãƒˆç®¡ç†ã‚¯ãƒ©ã‚¹
+	// *æˆ¦é—˜æ©Ÿã¯ã‚·ãƒ§ãƒƒãƒˆç”Ÿæˆã ã‘ã‚’å—ã‘å¾…ã¡ã€‚ç§»å‹•ã¯ã‚·ãƒ§ãƒƒãƒˆè‡ªèº«ãŒè¡Œã†
 	class Shot extends BaseObject{
 
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		public Shot()
 		{
 			super();
 		}
 
-		// ’eˆÚ“®
+		// å¼¾ç§»å‹•
 		public void Move()
 		{
 			if(!this.isEnable) return;
@@ -60,7 +57,7 @@ public class Fighter extends BaseObject{
 				this.Enable(false);
 		}
 
-		// ’e•\¦
+		// å¼¾è¡¨ç¤º
 		public void Show(Graphics2D g2)
 		{
 			if(!this.isEnable) return;
@@ -100,29 +97,29 @@ public class Fighter extends BaseObject{
 	}
 
 
-	// ‚±‚Ì‚Ö‚ñˆê‚ÌŠÖ”‚É‚ào—ˆ‚é‚¯‚Ç–¼‘O‚Ì•t‚¯•û‚ß‚ñ‚Ç‚­‚³‚¢‚Ì‚Å
+	// ã“ã®è¾ºä¸€ç·’ã®é–¢æ•°ã«ã‚‚ã§ãã‚‹ã‘ã©åå‰ã®ä»˜ã‘æ–¹ã‚ã‚“ã©ãã•ã„ã®ã§
 	public void Show(Graphics2D g2)
 	{
-		// ƒVƒ‡ƒbƒg
+		// ã‚·ãƒ§ãƒƒãƒˆ
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i].Show(g2);
 		}
 
-		// ©‹@
+		// è‡ªæ©Ÿ
 		if(!isEnable) return;
 
-		g2.setPaint(Color.blue);
+		g2.setPaint(Color.white);
 		g2.fill(new Arc2D.Double( (int)fX - 55, (int)fY - 55, 110, 110, 250, 40, Arc2D.PIE));
 		g2.setPaint(Color.yellow);
 		g2.fill(new Arc2D.Double( (int)fX - 40, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
 		g2.fill(new Arc2D.Double( (int)fX + 30, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
 	}
 
-	// ˆÚ“®
+	// ç§»å‹•
 	public void Move()
 	{
-		// ƒVƒ‡ƒbƒg
+		// ã‚·ãƒ§ãƒƒãƒˆ
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i].Move();
@@ -137,7 +134,7 @@ public class Fighter extends BaseObject{
 		}
 		else if(bKeyRight)
 		{
-			if(fX <= 480)
+			if(fX <= 1000)
 				fX += fVX;
 		}
 
@@ -148,35 +145,35 @@ public class Fighter extends BaseObject{
 		}
 		else if(bKeyDown)
 		{
-			if(fY <= 610)
+			if(fY <= 1000)
 				fY += fVY;
 		}
 	}
 
 
-	// ƒVƒ‡ƒbƒg¶¬
+	// ã‚·ãƒ§ãƒƒãƒˆç”Ÿæˆ
 	public void Shoot()
 	{
 		if(!isEnable) return;
 
-		// ƒ{ƒ^ƒ“‚¨‚µ‚Á‚Ï‚¶‚á‚È‚­‚Äƒ{ƒ^ƒ“Å‰‚É‰Ÿ‚µ‚½
+		// ãƒœã‚¿ãƒ³æŠ¼ã—ã£ã±ã˜ã‚ƒãªãã¦ãƒœã‚¿ãƒ³æœ€åˆã«æŠ¼ã—ãŸæ™‚
 		if(bKeyZ == KB_TRIG)
 		{
 			shotTimer = 0;
 		}
 
-		// ƒ{ƒ^ƒ“‰Ÿ‚³‚ê‚Æ‚é‚©[H
+		// ãƒœã‚¿ãƒ³æŠ¼ã•ã‚Œã¨ã‚‹ã‹ï¼Ÿ
 		if(bKeyZ == KB_PUSH)
 		{
-			// 2‰ñ‚Éˆê‰ñì‚é‚æ
+			// 2å›ã«ä¸€å›ä½œã‚‹ã‚ˆ
 			if(shotTimer % 2 == 0)
 			{
 				if(numValidShot>=2)
 				{
-					// 2ƒRì‚è‚½‚¢‚Ì‚Å
+					// 2å€‹ä½œã‚ŠãŸã„
 					for(int i=0; i<2; i++)
 					{
-						// ‚Ü‚¸ì‚ê‚é‚â‚Â‚ ‚é‚©‚Ç‚¤‚©Œ©‚é‚æ
+						// ã¾ãšä½œã‚Œã‚‹ã‚„ã¤ã‚ã‚‹ã‹ã©ã†ã‹ã¿ã‚‹ã‚ˆ
 						for(int j=0; j<numShot; j++)
 						{
 							if(shot[j].isEnable) continue;
@@ -194,7 +191,7 @@ public class Fighter extends BaseObject{
 	}
 
 
-	// ƒ{ƒ^ƒ“‰Ÿ‚µ‚Ä‚é‚Æ‚«
+	// ãƒœã‚¿ãƒ³æŠ¼ã—ã¦ã‚‹æ™‚
 	public void KeyPressedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
@@ -219,7 +216,7 @@ public class Fighter extends BaseObject{
 		}
 	}
 
-	// ƒ{ƒ^ƒ“—£‚µ‚½‚Æ‚«
+	// ãƒœã‚¿ãƒ³æŠ¼ã—ãŸç¬é–“
 	public void KeyReleasedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
@@ -244,7 +241,7 @@ public class Fighter extends BaseObject{
 		}
 	}
 
-	// ƒ{ƒ^ƒ“‰Ÿ‚µ‚½uŠÔ
+	// s
 	public void KeyTypedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;

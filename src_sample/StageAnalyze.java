@@ -5,15 +5,15 @@ import java.security.AccessControlException;
 public class StageAnalyze {
 	private Enemy[] _enemy = new Enemy[100];
 	public Enemy[] GetTemporaryEnemy(){return _enemy;}
-	private String[] _str = new String[100];		// “G‚Ì”•Û‘¶
-	private String[] _token = new String[10];		// •ªŠ„•¶š•Û‘¶
-	private int _numStr = 0;		// s”•Û‘¶
+	private String[] _str = new String[100];		// æ•µã®æ•°ä¿å­˜
+	private String[] _token = new String[10];		// åˆ†å‰²æ–‡å­—ä¿å­˜
+	private int _numStr = 0;		// è¡Œæ•°ä¿å­˜
 	public int GetStringNumber(){return _numStr;}
 
 	private LinkedList<String[]> _tokenList;
 	public LinkedList<String[]> GetScenario(){return _tokenList;}
 	
-	// ƒXƒe[ƒWƒf[ƒ^‚ğ‰ğÍ
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¢è§£æ
 	public void Analyze(String filePath)  throws AccessControlException
 	{
 		String temp = null;
@@ -29,27 +29,27 @@ public class StageAnalyze {
 
 			_tokenList = new LinkedList<String[]>();
 			
-			//	‚Æ‚è‚ ‚¦‚¸ˆês‚¸‚Â“Ç‚Ş
+			//	ã¨ã‚Šã‚ãˆãšï¼‘è¡Œãšã¤èª­ã‚€
 			while (buffererdReader.ready()){
-				// ƒRƒƒ“ƒg@”ò‚Î‚·
+				// ã‚³ãƒ¡ãƒ³ãƒˆã€€é£›ã°ã™
 				if((temp = buffererdReader.readLine()).startsWith("//")) continue;
-				// ƒ{ƒX‚Ìˆ—‚Í‚±‚±‚Å‰ğÍ
+				// ãƒœã‚¹ã®å‡¦ç†ã¯ã“ã“ã§è§£æ
 				else if(temp.startsWith("*"))
 				{
-					// ƒ{ƒXƒNƒ‰ƒX‚ğnew‚µ‚Ä‚±‚ÌƒNƒ‰ƒX‚Åˆê“I‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Û‘¶‚·‚ê‚Î‚¢‚¢‚ñ‚¶‚á‚È‚¢‚©‚È‚ H
-					// ƒ{ƒXƒNƒ‰ƒX‚ÍŠK‘w\‘¢‚É‚µ‚Ä”j‰ó‰Â”\‚Èƒp[ƒc‚ğ‚½‚¹‚½‚è‚·‚é‚ÆSTG‚Á‚Û‚¢‚æ‚Ë
-					// ¡‚Í–¢À‘•‚È‚Ì‚ÅŸ‚Ö
+					//ãƒœã‚¹ã‚¯ãƒ©ã‚¹ã‚’newã—ã¦ã“ã®ã‚¯ãƒ©ã‚¹ã§ä¸€æ™‚çš„ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä¿æŒã™ã‚Œã°ã„ã„ã‚“ã˜ã‚ƒãªã„ã‹ãªï¼Ÿ
+					//ãƒœã‚¹ã‚¯ãƒ©ã‚¹ã¯éšå±¤æ§‹é€ ã«ã—ã¦ç ´å£Šå¯èƒ½ãªãƒ‘ãƒ¼ã‚ºã‚’æŒãŸã›ãŸã‚Šã™ã‚‹ã¨STGã£ã½ã„ã‚ˆã­
+					//ä»Šã¯æœªå®Ÿè£…ãªã®ã§æ¬¡ã¸
 					continue;
 				}
 
-				// ‚±‚±‚©‚ç’Êí“G
-				// “G‚Ì”z’u‚¾‚¯‚Í‚¿‚å‚Á‚Æ•¡G‚É
+				// ã“ã“ã‹ã‚‰é€šå¸¸çš„
+				// æ•µã®é…ç½®ã ã‘ã¯ã¡ã‚‡ã£ã¨è¤‡é›‘ã«
 				_str[_numStr] = temp;
-				// •ªŠ„‚·‚é
+				// åˆ†å‰²ã™ã‚‹
 				st = new StringTokenizer(_str[_numStr],",");
 			
 				_token = new String[10];
-				// •ªŠ„‚µ‚½ƒg[ƒNƒ“‚ğˆê“I‚ÉŠi”[
+				// åˆ†å‰²ã—ãŸãƒˆãƒ¼ã‚¯ãƒ³ã‚’ä¸€æ™‚çš„ã«æ ¼ç´
 				for(int i=0; st.hasMoreTokens(); i++) {
 						_token[i] = st.nextToken();
 				}
@@ -59,7 +59,7 @@ public class StageAnalyze {
 					_tokenList.add(_token);
 					_numStr++;
 				}
-				// ƒfƒoƒbƒO—p‚É“Ç‚İ‚ñ‚¾ƒXƒeƒbƒv”‚ğ•\¦
+				// ãƒ‡ãƒãƒƒã‚°ç”¨ã«èª­ã¿è¾¼ã‚“ã ã‚¹ãƒ†ãƒƒãƒ—æ•°ã‚’è¡¨ç¤º
 				
 				System.out.print("Token:");
 				for(String[] s: _tokenList)
@@ -101,7 +101,7 @@ public class StageAnalyze {
 		temp.SetVY(new Float(tempString[4]).floatValue());
 		temp.SetHP(new Integer(tempString[5]).intValue());
 		temp.SetDEF(new Integer(tempString[6]).intValue());
-		// ‚±‚±‚Ístateƒpƒ^[ƒ“‚âstrategyƒpƒ^[ƒ“‚ğg‚Á‚Ä‚ ‚ç‚©‚¶‚ß—pˆÓ‚µ‚½ó‘Ô‚ğ“o˜^‚·‚éŒ`®‚É‚µ‚Ä‚à‚¢‚¢EEE‚Æ‚¢‚¤‚©‚Ş‚µ‚ë‚»‚Ì•û‚ª‚¢‚¢
+		//ã“ã“ã¯stateãƒ‘ã‚¿ãƒ¼ãƒ³ã‚„strategyãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ä½¿ã£ã¦ã‚ã‚‰ã‹ã˜ã‚ç”¨æ„ã—ãŸçŠ¶æ…‹ã‚’ç™»éŒ²ã™ã‚‹å½¢å¼ã«ã—ã¦ã‚‚ã„ã„...ã¨ã„ã†ã‹ã‚€ã—ã‚ãã®æ–¹ãŒã„ã„
 		temp.SetBulletIntvl(new Integer(tempString[7]).intValue());
 		temp.SetBulletType(new Integer(tempString[8]).intValue());
 		temp.SetBulletSpeed(new Integer(tempString[9]).intValue());

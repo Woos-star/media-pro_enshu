@@ -13,7 +13,7 @@ public class Bullet extends BaseObject {
 	{
 		if(!isEnable) return;
 
-		g2.setPaint(Color.orange);
+		g2.setPaint(Color.yellow);
 		g2.fill(new Ellipse2D.Double(fX - 5f, fY - 5f, 10f, 10f));
 	}
 }

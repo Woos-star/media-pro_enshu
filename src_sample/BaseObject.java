@@ -1,6 +1,6 @@
 import java.awt.Graphics2D;
 
-// 自機や敵キャラの基底クラス
+//閾ｪ讖溘ｄ謨ｵ繧ｭ繝｣繝ｩ縺ｮ蝓ｺ遉弱け繝ｩ繧ｹ
 public class BaseObject {
 	protected float fX;
 	protected float fY;
@@ -8,7 +8,6 @@ public class BaseObject {
 	protected float fVY;
 	protected boolean isEnable;
 
-	//
 	public BaseObject()
 	{
 		fX = 0;
@@ -34,7 +33,7 @@ public class BaseObject {
 		return isEnable;
 	}
 
-	// データ設定用
+	// 繝�繝ｼ繧ｿ險ｭ螳夂畑
 
 	//
 	public void SetPos(float x, float y)
@@ -61,8 +60,8 @@ public class BaseObject {
 		isEnable = flag;
 	}
 
-	//主処理
-	//
+	//荳ｻ蜃ｦ逅�
+	
 	public void Move()
 	{
 		if(!this.isEnable) return;

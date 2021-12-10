@@ -50,7 +50,7 @@ public class EnemyManager {
 		BulletShow(g2);
 	}
 	
-	// “GˆÚ“®
+	// æ•µç§»å‹•
 	public void EnemyMove()
 	{
 		for(int i=0; i<ENEMY_MAX; i++)
@@ -66,7 +66,7 @@ public class EnemyManager {
 		}
 	}
 
-	// ’eˆÚ“®
+	// å¼¾ç§»å‹•
 	public void BulletMove()
 	{
 		for(int i=0; i<BULLET_MAX; i++)
@@ -107,7 +107,7 @@ public class EnemyManager {
 		}
 	}
 
-	// “GƒVƒ‡ƒbƒg
+	// æ•µã‚·ãƒ§ãƒƒãƒˆ
 	public void BulletCreate()
 	{
 		for(int i=0; i<ENEMY_MAX; i++)
@@ -152,7 +152,7 @@ public class EnemyManager {
 		return rtn;
 	}
 
-	// “G‚ÆŽ©‹@‚Ì”»’è
+	// æ•µã¨è‡ªæ©Ÿã®åˆ¤å®š
 	private boolean HitCheckEnemyAndFighter()
 	{
 		if(!_fighter.IsEnable()) return false;
@@ -180,18 +180,18 @@ public class EnemyManager {
 		return false;
 	}
 
-	// “G‚ÆŽ©’e‚Ì”»’è
+	// æ•µã¨è‡ªå¼¾ã®åˆ¤å®š
 	private void HitCheckEnemyAndShot()
 	{
 		for(int i=0;i<_fighter.GetNumShot();i++)
 		{
-			// ’e—LŒø‚Å‚È‚©‚Á‚½‚çŽŸ‚Ö
+			// å¼¾æœ‰åŠ¹ã§ãªã‹ã£ãŸã‚‰æ¬¡ã¸
 			if(!_fighter.GetShot()[i].IsEnable()) continue;
 
-			// ’e—LŒø‚¾‚Á‚½‚ç“G‘S•”‚Æ’e‚ÉŠÖ‚µ‚Ä‚Ì”»’è‚ð‚·‚é
+			// å¼¾æœ‰åŠ¹ã ã£ãŸã‚‰æ•µå…¨éƒ¨ã¨å¼¾ã«é–¢ã—ã¦ã®åˆ¤å®šã‚’ã™ã‚‹
 			for(int j=0;j<ENEMY_MAX;j++)
 			{
-				// ‰æ–Ê“à‚É“G‹‚È‚©‚Á‚½‚ç”ò‚Î‚·
+				// å¤–é¢å†…ã«æ•µã„ãªã‹ã£ãŸã‚‰é£›ã°ã™
 				if(_enemy[j] == null || !_enemy[j].IsEnable()) continue;
 					float dx, dy, width, height;
 				dx = _enemy[j].GetX() - _fighter.GetShot()[i].GetX() - 5;
@@ -210,7 +210,7 @@ public class EnemyManager {
 		}
 	}
 
-	// “G’e‚ÆŽ©‹@‚Ì”»’è
+	// æ•µå¼¾ã¨è‡ªæ©Ÿã®åˆ¤å®š
 	private boolean HitCheckBulletAndFighter()
 	{
 		if(!_fighter.IsEnable()) return false;
@@ -222,10 +222,10 @@ public class EnemyManager {
 			dx = _bullet[i].GetX() - _fighter.GetX();
 			dy = _bullet[i].GetY() - _fighter.GetY() - 23;
 
-			width = 20;
-			height = 28;
+			width = 20/2;
+			height = 28/2;
 
-			// “–‚½‚è‚Ü‚µ‚½
+			// å½“ãŸã‚Šã¾ã—ãŸ
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
 				_bullet[i].Enable(false);

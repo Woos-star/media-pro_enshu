@@ -1,26 +1,23 @@
 /*
- * ì¬“ú: 2004/08/29
- *
- * ‚±‚Ì¶¬‚³‚ê‚½ƒRƒƒ“ƒg‚Ì‘}“ü‚³‚ê‚éƒeƒ“ƒvƒŒ[ƒg‚ğ•ÏX‚·‚é‚½‚ß
- * ƒEƒBƒ“ƒhƒE > İ’è > Java > ƒR[ƒh¶¬ > ƒR[ƒh‚ÆƒRƒƒ“ƒg
+ *ä½œæˆ2004/08/29
+ * ã“ã®ç”Ÿæˆã•ã‚ŒãŸã‚³ãƒ¡ãƒ³ãƒˆã®æŒ¿å…¥ã•ã‚Œã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ï¼ã¨ã‚’å¤‰æ›´ã™ã‚‹ãŸã‚
+ * window > è¨­å®š > Java >ã€€ã‚³ãƒ¼ãƒ‰ç”Ÿæˆ > ã‚³ãƒ¼ãƒ‰ã¨ã‚³ãƒ¡ãƒ³ãƒˆ
  */
 
 /**
  * @author Administrator
  *
- * ‚±‚Ì¶¬‚³‚ê‚½ƒRƒƒ“ƒg‚Ì‘}“ü‚³‚ê‚éƒeƒ“ƒvƒŒ[ƒg‚ğ•ÏX‚·‚é‚½‚ß
- * ƒEƒBƒ“ƒhƒE > İ’è > Java > ƒR[ƒh¶¬ > ƒR[ƒh‚ÆƒRƒƒ“ƒg
  */
 import java.awt.*;
 import java.awt.geom.*;
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
-	private int m_Def;			// –hŒä—Í
-	private int m_AppearTime;	// oŒ»ŠÔ
-	private int m_bulletType;	// ’eƒ^ƒCƒv
-	private int m_bulletIntvl;	// ”­ËŠÔŠu
-	private int m_bulletSpeed;	// ’e‘¬“x
+	private int m_Def;			// é˜²å¾¡åŠ›
+	private int m_AppearTime;	// å‡ºç¾æ™‚é–“
+	private int m_bulletType;	// å¼¾ã‚¿ã‚¤ãƒ—
+	private int m_bulletIntvl;	// ç™ºå°„é–“éš”
+	private int m_bulletSpeed;	// å¼¾é€Ÿåº¦
 
 	public final static int BL_1WAY_MON	=	0;
 	public final static int BL_8WAY_ALL	= 	1;
@@ -86,7 +83,7 @@ public class Enemy extends BaseObject{
 			Enable(false);
 	}
 
-	// ’e¶¬
+	//å¼¾ç”Ÿæˆ
 	public void Fire()
 	{
 		if(!isEnable) return;
@@ -106,7 +103,7 @@ public class Enemy extends BaseObject{
 		g2.fill(new Ellipse2D.Double(fX - 10f, fY, 20f, 20f));
 	}
 
-	// ‘_‚¢’e‚ğ¶¬
+	//ç‹™ã„å¼¾ã‚’ç”Ÿæˆ
 	public void CreateEimsBullet()
 	{
 		Fighter fighter = _manager.GetFighter();

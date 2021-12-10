@@ -2,45 +2,45 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-// ‚±‚±‚ÍMVC‚Å‚¢‚¦‚ÎV‚ÆC‚É‚ ‚½‚é
+// ã“ã“ã¯MVCã§è¨€ãˆã°ã€Vã¨C
 
-// MVC‚ÌŠÏ“_‚Å‘g‚Ş‚Æ‚·‚é‚Æ
-// M‚ÍƒQ[ƒ€‘S‘Ì‚Ìó‘Ô‚Æ‚»‚ê‚É‘Î‚·‚éˆ—‚ğŠÇ—‚·‚éGameManagerƒNƒ‰ƒX
-// V‚ÍJPanel‚Å‚Ì•\¦BGameManager‚Ìó‘Ô‚É‰‚¶‚Äˆ—‚ğ‚·‚é
-// ‚Ç‚¤‚¹ƒL[“ü—Í‚È‚ñ‚ÅC‚àJPanel‚ÉKeyListener‚ğ“ü‚ê‚ÄŠæ’£‚Á‚Ä‚à‚ç‚¤
-// GameManager‚É‚Íó‘Ô‚ğ‚½‚¹A‚»‚ê‚ğØ‚è‘Ö‚¦‚³‚¹‚é
-// stateƒpƒ^[ƒ“‚É‚Ü‚Æ‚ß‚ê‚Î“ü—ÍŒn‚à‚·‚Á‚«‚è
+// MVCã®è¦³ç‚¹ã§çµ„ã‚€ã¨ã™ã‚‹ã¨
+// Mã¯ã‚²ãƒ¼ãƒ å…¨ä½“ã®çŠ¶æ…‹ã¨ãã‚Œã«å¯¾ã™ã‚‹å‡¦ç†ã‚’ç®¡ç†ã™ã‚‹ã‚²ãƒ¼ãƒ manager
+// Vã¯JPanelã§ã®è¡¨ç¤ºã€‚GameManagerã®çŠ¶æ…‹ã«å¿œã˜ã¦å‡¦ç†ã‚’ã™ã‚‹
+// ã©ã†ã›ã‚­ãƒ¼å…¥åŠ›ãªã‚“ã§cã‚‚JPanelã«KeyListenerã‚’å…¥ã‚Œã¦é ‘å¼µã£ã¦ã‚‚ã‚‰ã†
+// GameManagerã«ã¯çŠ¶æ…‹ã‚’æŒãŸã›ã€ãã‚Œã‚’åˆ‡ã‚Šæ›¿ãˆã•ã›ã‚‹
+// stateãƒ‘ã‚¿ãƒ¼ãƒ³ã«ã¾ã¨ã‚ã‚Œã°å…¥åŠ›ç³»ã‚‚ã‚¹ãƒƒã‚­ãƒª
 
 public class STG extends JPanel implements Runnable, KeyListener{
 
 	public static Thread mainThread = null;
-	// ƒƒCƒ“ŠÖ”
+	// ã‚¨ã‚¤ãƒ³é–¢æ•°
 	public static void main(String args[])
 	{
-		// “K“–‚ÈJƒtƒŒ[ƒ€‚ğ—pˆÓ
+		//é©å½“ãªJFrameç”¨æ„
 		JFrame frame = new JFrame();
 
-		// ƒƒCƒ“ƒpƒlƒ‹iƒVƒ…[ƒeƒBƒ“ƒO‚ğÀs‚·‚éƒpƒlƒ‹j‚ğV‹Kì¬
+		//ãƒ¡ã‚¤ãƒ³ãƒ‘ãƒãƒ«ï¼ˆã‚·ãƒ¥ãƒ¼ãƒ†ã‚£ãƒ³ã‚°ã‚’å®Ÿè¡Œã™ã‚‹ãƒ‘ãƒãƒ«ï¼‰ã‚’æ–°è¦ä½œæˆ
 		STG app = new STG();
-		// ƒtƒŒ[ƒ€‚É“o˜^
+		//ãƒ•ãƒ¬ãƒ¼ãƒ ã«ç™»éŒ²
 		frame.getContentPane().add(app);
-		// ŠeíƒtƒŒ[ƒ€‚Ìİ’è
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-		frame.setBounds(10, 10, 480, 640); // ƒEƒBƒ“ƒhƒEƒTƒCƒY
-		frame.setTitle("Templete Shooting"); // ƒ^ƒCƒgƒ‹
-		frame.setVisible(true); // Œ©‚¦‚é‚æ‚¤‚É‚µ‚È‚¢‚Æ‚Ë
+		//å„ç¨®ãƒ•ãƒ¬ãƒ¼ãƒ ã®è¨­å®š
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		frame.setBounds(10, 10, 1000, 1000); 
+		frame.setTitle("Templete Shooting"); // 
+		frame.setVisible(true); // 
 
-		// ƒƒCƒ“ƒXƒŒƒbƒh‰»
+		//ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰åŒ–
 		mainThread = new Thread(app);
 		
-		// İ’èI‚í‚Á‚½‚Ì‚ÅƒƒCƒ“ƒpƒlƒ‹‰Šú‰»‚µ‚ÄŠJn
+		//è¨­å®šçµ‚ã‚ã£ãŸã®ã§ãƒ¡ã‚¤ãƒ³ãƒ‘ãƒãƒ«åˆæœŸåŒ–ã—ã¦é–‹å§‹
 		app.init();
 	}
 	
-	// ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ‚Ì•Û
+	//ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ã®ä¿æŒ
 	private GameManager _gmanager;
 
-	// •`‰æ‘ÎÛƒoƒbƒtƒ@
+	// æç”»å¯¾è±¡ãƒãƒƒãƒ•ã‚¡
 	private Image buffer;
 	private Graphics bufferGraphics;
 	
@@ -49,7 +49,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 		setForeground(Color.white);
 
 		if (buffer == null){
-			buffer = createImage(480, 640);
+			buffer = createImage(1000, 1000);
 			bufferGraphics = buffer.getGraphics();
 		}
 
@@ -62,49 +62,49 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	}
 
 
-	// ƒXƒŒƒbƒh‚Å“®‚­ŠÖ”‚©‚à‚µ‚ê‚È‚¢
+	//ã‚¹ãƒ¬ãƒƒãƒ‰ã§å‹•ãé–¢æ•°ã‹ã‚‚ã—ã‚Œãªã„
 	public void run(){
 		while (true){
 			try{
-				Thread.sleep(20);	// FPS’²®EEE‚Å‚àˆ——‚¿‚µ‚Ä‚é‚©‚ç‚ ‚ñ‚ÜŠÖŒW‚Ë‚¦‚Á‚Û
+				Thread.sleep(20);	//FPSèª¿æ•´ãƒ»ãƒ»ãƒ»ã§ã‚‚å‡¦ç†è½ã¡ã—ã¦ã‚‹ã‹ã‚‰ã‚ã‚“ã¾é–¢æ•°ã­ãˆã£ã½
 			}catch (InterruptedException e){
 				break;
 			}
 
-			Graphics2D g2 = (Graphics2D) bufferGraphics;	// 2Dg‚¤‚½‚ß
+			Graphics2D g2 = (Graphics2D) bufferGraphics;	//2Dä½¿ã†ãŸã‚
 
 			g2.setBackground(Color.black);
-			g2.clearRect(0, 0, 480, 640);
+			g2.clearRect(0, 0, 1000, 1000);
 
-			// ƒAƒ“ƒ`ƒGƒCƒŠƒAƒVƒ“ƒO
+			//ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚·ãƒ³ã‚°
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setStroke(new BasicStroke(4.0f));
 
-			// ƒQ[ƒ€“àˆ—
+			//ã‚²ãƒ¼ãƒ å†…å‡¦ç†
 			_gmanager.GameMainUpdate();	
 			
-			// ‚±‚Ì•Ó‚Å•`‰æ
+			//ã“ã®è¾ºã§æç”»
 			ShowObjects(g2);
 			
-			// ØÍß²İÄ
+			//ãƒªãƒšã‚¤ãƒ³ãƒˆ
 			repaint();
 		}
 	}
 
-	// •`‰æ–½—ß
+	// æç”»å‘½ä»¤
 	public void ShowObjects(Graphics2D g2)
 	{
 		_gmanager.State().Show(g2);
 	}
 	
-	// Ä•`‰æ–½—ß‚ÌÛ‚É‚Í‚±‚ê‚ğ’£‚è‚È‚¨‚·
+	//å‚¬ç§’ãŒå‘½ä»¤ã®éš›ã«ã¯ã“ã‚Œã‚’é ‘å¼µã‚ŠãªãŠã™
 	public void paintComponent(Graphics g){
 			g.setColor(Color.black);
-			g.clearRect(0, 0, 480, 640);
+			g.clearRect(0, 0, 1000, 1000);
 			g.drawImage(buffer, 0, 0, this);
 	}
 
-	// “ü—ÍŒnBó‘Ô‚É‚æ‚èØ‚è‘Ö‚¦‚é
+	//å…¥åŠ›ç³»ã€‚çŠ¶æ…‹ã«ã‚ˆã‚Šåˆ‡ã‚Šæ›¿ãˆã‚‹
 	public void keyPressed(KeyEvent e){
 		_gmanager.State().KeyPressed(e);
 	}

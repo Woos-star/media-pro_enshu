@@ -3,9 +3,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-// I—¹‚Ìƒ‚[ƒh
-// I—¹‚µ‚È‚¢‚Åƒ^ƒCƒgƒ‹–ß‚Á‚Ä‚à‚¢‚¢
+// çµ‚äº†æ™‚ã®ãƒ¢ãƒ¼ãƒ‰
+// çµ‚äº†ã—ãªã„ã§ã‚¿ã‚¤ãƒˆãƒ«æˆ»ã£ã¦ã‚‚ã„ã„
 public class ExitState implements ModeState{
+
+	private boolean m_bKeyR;
+	public void KeyR(boolean on){m_bKeyR = on;}
+	private boolean m_bKeyX;
+	public void KeyX(boolean on){m_bKeyX = on;}	
 
 	@Override
 	public void init() {
@@ -15,28 +20,46 @@ public class ExitState implements ModeState{
 	@Override
 	public void Show(Graphics2D g2) {
 		// TODO Auto-generated method stub
-		g2.setFont(new Font("‚l‚r ƒSƒVƒbƒN", Font.BOLD, 16));
+		g2.setFont(new Font("MSã€€ã‚´ã‚·ãƒƒã‚¯", Font.BOLD, 16));
 		g2.setPaint(Color.yellow);
-		g2.drawString("I‚í‚è‚Å‚·B",10, 100);
-		g2.drawString("‚±‚Ì‚Ü‚ÜƒAƒvƒŒƒbƒgƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚Ä‚­‚¾‚³‚¢B", 10,120);
+		g2.drawString("çµ‚ã‚ã‚Šã¯ã“ã®ã¾ã¾ã‚¢ãƒ—ãƒ¬ãƒƒãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¦ãã ã•ã„",10, 100);
+		g2.drawString("restartã®ã‚­ãƒ¼ã¯rã§ã™", 10,120);
 	}
 
 	@Override
 	public void run(GameManager gm) {
 		// TODO Auto-generated method stub
-		
+		if(m_bKeyR) {
+			gm.ChangeMode(new MainGameState());
+		}else if (m_bKeyX){
+			gm.ChangeMode(new TitleState());
+		}
 	}
 
 	@Override
 	public void KeyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		//TODO Auto-generated method stub
+		switch(arg0.getKeyCode()){
+			case KeyEvent.VK_R:
+			KeyR(true);
+			break;
+			case KeyEvent.VK_X:
+			KeyX(true);
+			break;
+		}
 	}
 
 	@Override
 	public void KeyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		switch(arg0.getKeyCode()){
+			case KeyEvent.VK_R:
+			KeyR(false);
+			break;
+			case KeyEvent.VK_X:
+			KeyX(false);
+			break;
+		}
 	}
 
 	@Override

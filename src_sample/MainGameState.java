@@ -7,15 +7,15 @@ public class MainGameState implements ModeState{
 	private Fighter	_fighter;
 	public Fighter GetFighter(){return _fighter;}
 	
-	// ƒXƒe[ƒWƒf[ƒ^“Ç‚İ‚İ—p
+
 	private StageAnalyze _analyze;
 	public StageAnalyze GetStage(){return _analyze;}
 
-	// ƒQ[ƒ€“àƒ^ƒCƒ}[
+
 	private int _gameTimer;
 	public int GetTime(){return _gameTimer;}
 
-	// “GƒLƒƒƒ‰‚ÌŠÇ——p
+
 	private EnemyManager _emanager;
 	
 	public MainGameState()
@@ -23,28 +23,28 @@ public class MainGameState implements ModeState{
 		init();
 	}
 	
-	// ‰Šú‰»—p
+
 	public void init()
 	{		
-		// í“¬‹@‚ğ—pˆÓ‚·‚é‚æ[
+
 		_fighter = new Fighter();
 
-		// í“¬‹@‚Ìƒpƒ‰ƒ[ƒ^‚¾‚æ[
-		// ‰½‚©‚Ìƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚ñ‚¾‚è‚µ‚Ä‚à‚¢‚¢
+
+
 		_fighter.Enable(true);
 		_fighter.SetPos(250, 500);
 		_fighter.SetVX(16.0f);
 		_fighter.SetVY(16.0f);
 
-		// ƒXƒe[ƒWƒf[ƒ^‚¾‚æ[
-		// ƒXƒe[ƒWƒf[ƒ^“Ç‚İ‚İ‚ÍAƒXƒe[ƒW‚ğstateƒpƒ^[ƒ“‚ÅÀ‘•‚µ‚Ä‚»‚Ì’†‚Å‚â‚Á‚Ä‚à‚¢‚¢
+		// ï¿½Xï¿½eï¿½[ï¿½Wï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½[
+		// ï¿½Xï¿½eï¿½[ï¿½Wï¿½fï¿½[ï¿½^ï¿½Ç‚İï¿½ï¿½İ‚ÍAï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½stateï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ì’ï¿½ï¿½Å‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½
 		_analyze	= new StageAnalyze();
 		_analyze.Analyze("stage1.txt");
 
-		// “Gî•ñ‚¾‚æ[
+		// ï¿½Gï¿½ï¿½ñ‚¾‚ï¿½[
 		_emanager = new EnemyManager(this);
 		
-		// ƒvƒŒƒC’†‚ÌŠÔŒo‰ß
+
 		_gameTimer = 0;
 	}
 
@@ -52,33 +52,33 @@ public class MainGameState implements ModeState{
 	public void Show(Graphics2D g2) {
 		// TODO Auto-generated method stub
 
-		// ©‹@‚Æ“G‚Ì•\¦
+		// ï¿½ï¿½ï¿½@ï¿½Æ“Gï¿½Ì•\ï¿½ï¿½
 		_fighter.Show(g2);
 		_emanager.Show(g2);
 		
-		// ŠÔ‚Ì•\¦
+		// ï¿½ï¿½ï¿½Ô‚Ì•\ï¿½ï¿½
 		g2.setColor(Color.white);
-		g2.drawString("Œo‰ßŠÔ:" + new Integer(_gameTimer).toString(), 10, 30);
+		g2.drawString("çµŒéæ™‚é–“:" + new Integer(_gameTimer).toString(), 10, 30);
 	}
 
 	@Override
 	public void run(GameManager gm) {
-		// 1000•b‰ß‚¬‚½‚çI‚í‚è 
-		// ƒ{ƒX‚Æ‚©’Ç‰Á‚·‚é‚Æ‚«‚Í‚±‚±‚ğ–³‚­‚µ‚Ä‚â‚ç‚È‚¢‚Æ‚¢‚¯‚È‚¢‚©‚È
+		// 1000ï¿½bï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ 
+		// ï¿½{ï¿½Xï¿½Æ‚ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Í‚ï¿½ï¿½ï¿½ï¿½ğ–³‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(_gameTimer == 1000) gm.ChangeMode(new ExitState());
 
-		// ˆÚ“®ˆ—	
+		// ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½	
 		_fighter.Move();
 		
-		// ©‹@ƒVƒ‡ƒbƒgËo
+		// ï¿½ï¿½ï¿½@ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½Ëo
 		_fighter.Shoot();
 		
-		// “G‚ÌƒAƒbƒvƒf[ƒg
+		// ï¿½Gï¿½ÌƒAï¿½bï¿½vï¿½fï¿½[ï¿½g
 		_emanager.update(_gameTimer++);
 
-		// ‚ ‚½‚è”»’è
+		// ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
 		if(_emanager.HitCheck()){
-			// ’e‚©“G‚É“–‚½‚Á‚½‚çI—¹‚·‚é
+			// ï¿½eï¿½ï¿½ï¿½Gï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			gm.ChangeMode(new ExitState());
 			//gm.ChangeMode(new TitleState());
 		}	
