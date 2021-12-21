@@ -10,17 +10,17 @@ public class TitleState implements ModeState{
 	private final static int END		= 1;
 	private int _cursorPos = START;
 
-	// ƒƒCƒ“ƒ^ƒCƒgƒ‹‚ÌˆÊ’u
+	// ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ÌˆÊ’u
 	private final static int TITLEPOSX	= 50;
 	private final static int TITLEPOSY	= 150;
 
-	// ƒƒCƒ“ƒƒjƒ…[•\¦ˆÊ’uB•\¦ŠÔŠuBƒJ[ƒ\ƒ‹ˆÊ’uixÀ•W‚Ì‚İj
+	// ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½\ï¿½ï¿½ï¿½Ê’uï¿½Bï¿½\ï¿½ï¿½ï¿½ÔŠuï¿½Bï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Ê’uï¿½ixï¿½ï¿½ï¿½Wï¿½Ì‚İj
 	private final static int MENUPOSX		= 200;
 	private final static int MENUPOSY		= 280;
 	private final static int MENUINTVL	= 50;
 	private final static int CURSOR		= 150;
 
-	// ƒL[ƒtƒ‰ƒO
+	// ï¿½Lï¿½[ï¿½tï¿½ï¿½ï¿½O
 	private boolean m_bKeyUp;
 	public void KeyUp(boolean on){m_bKeyUp = on;}
 	private boolean m_bKeyDown;
@@ -38,7 +38,7 @@ public class TitleState implements ModeState{
 		// TODO Auto-generated method stub
 	}
 	
-	// ƒL[ˆÚ“®BŒˆ’è‚Æ‚©
+	// ï¿½Lï¿½[ï¿½Ú“ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
 	public void run(GameManager gm)
 	{
 		if(m_bKeyUp)
@@ -52,10 +52,10 @@ public class TitleState implements ModeState{
 				_cursorPos++;
 		}
 
-		// Z‰Ÿ‚µ‚½‚Æ‚«
+		// Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
 		if(m_bKeyZ)
 		{
-			// ƒJ[ƒ\ƒ‹ˆÊ’u‚Å•ªŠò
+			// ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Ê’uï¿½Å•ï¿½ï¿½ï¿½
 			switch(_cursorPos)
 			{
 				case START:
@@ -72,11 +72,11 @@ public class TitleState implements ModeState{
 	public void Show(Graphics2D g2) {
 		g2.setFont(new Font("Arial", Font.BOLD, 28));
 
-		// ‚½‚¢‚Æ‚é
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
 		g2.setPaint(Color.yellow);
 		g2.drawString("Templete Shooting",TITLEPOSX,TITLEPOSY);
 
-		// ‚·‚½‚ ‚Æ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(_cursorPos == START)
 			g2.setPaint(Color.green);
 		else
@@ -84,7 +84,7 @@ public class TitleState implements ModeState{
 		
 		g2.drawString("Game Start",MENUPOSX,MENUPOSY);
 
-		// ‚¨‚í‚è
+		// ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(_cursorPos == END)
 			g2.setPaint(Color.green);
 		else
@@ -92,7 +92,7 @@ public class TitleState implements ModeState{
 
 		g2.drawString("Quit",MENUPOSX,MENUPOSY + MENUINTVL);
 
-		// ‚©[‚»‚é
+		// ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½
 		g2.setPaint(Color.green);
 		switch(_cursorPos)
 		{
@@ -104,10 +104,10 @@ public class TitleState implements ModeState{
 				break;
 		}
 
-		// ‘€ì•\¦
+		// ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½
 		g2.setPaint(Color.yellow);
-		g2.setFont(new Font("‚l‚r ƒSƒVƒbƒN", Font.BOLD, 20));
-		g2.drawString("ª«ƒL[‚ÅƒJ[ƒ\ƒ‹ˆÚ“®BZƒL[‚ÅŒˆ’èB", 50,600);
+		g2.setFont(new Font("ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯", Font.BOLD, 20));
+		g2.drawString("", 50,600);
 	}
 	
 	@Override

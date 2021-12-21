@@ -1,26 +1,13 @@
-/*
- * 作成日: 2004/08/29
- *
- * この生成されたコメントの挿入されるテンプレートを変更するため
- * ウィンドウ > 設定 > Java > コード生成 > コードとコメント
- */
-
-/**
- * @author Administrator
- *
- * この生成されたコメントの挿入されるテンプレートを変更するため
- * ウィンドウ > 設定 > Java > コード生成 > コードとコメント
- */
 import java.awt.*;
 import java.awt.geom.*;
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
-	private int m_Def;			// 防御力
-	private int m_AppearTime;	// 出現時間
-	private int m_bulletType;	// 弾タイプ
-	private int m_bulletIntvl;	// 発射間隔
-	private int m_bulletSpeed;	// 弾速度
+	private int m_Def;		
+	private int m_AppearTime;	
+	private int m_bulletType;	
+	private int m_bulletIntvl;	
+	private int m_bulletSpeed;	
 
 	public final static int BL_1WAY_MON	=	0;
 	public final static int BL_8WAY_ALL	= 	1;
@@ -86,7 +73,7 @@ public class Enemy extends BaseObject{
 			Enable(false);
 	}
 
-	// 弾生成
+	
 	public void Fire()
 	{
 		if(!isEnable) return;
@@ -99,14 +86,14 @@ public class Enemy extends BaseObject{
 	{
 		if(!isEnable) return;
 
-		g2.setPaint(Color.green);
+		g2.setPaint(Color.blue);
 		g2.fill(new Ellipse2D.Double(fX - 20f, fY - 10f, 20f, 20f));
 		g2.fill(new Ellipse2D.Double(fX - 10f, fY - 20f, 20f, 20f));
 		g2.fill(new Ellipse2D.Double(fX, fY - 10f, 20f, 20f));
 		g2.fill(new Ellipse2D.Double(fX - 10f, fY, 20f, 20f));
 	}
 
-	// 狙い弾を生成
+	
 	public void CreateEimsBullet()
 	{
 		Fighter fighter = _manager.GetFighter();

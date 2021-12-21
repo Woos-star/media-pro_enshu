@@ -1,24 +1,11 @@
-/*
- * 作成日: 2004/08/24
- *
- * この生成されたコメントの挿入されるテンプレートを変更するため
- * ウィンドウ > 設定 > Java > コード生成 > コードとコメント
- */
-
-/**
- * @author Administrator
- *
- * この生成されたコメントの挿入されるテンプレートを変更するため
- * ウィンドウ > 設定 > Java > コード生成 > コードとコメント
- */
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
 public class Fighter extends BaseObject{
-	protected int nLeft;	// 残機数
+	protected int nLeft;	
 
-	// キー入力のフラグ
+       
 	protected boolean bKeyLeft;
 	protected boolean bKeyRight;
 	protected boolean bKeyUp;
@@ -30,23 +17,21 @@ public class Fighter extends BaseObject{
 	public final static int KB_PUSH	= 	2;
 	public final static int KB_PULL	=	3;
 
-	private int numShot;	// 画面表示ショット量
-	private int numValidShot; // 現在作れるショット数
+	private int numShot;	
+	private int numValidShot;
 	private int shotTimer = 0;
 
 	private Shot shot[];
 
-	// 内部クラス化された自機ショット管理クラス
-	// ＊戦闘機はショット生成だけを受け持ち。移動はショット自身が行う
-	class Shot extends BaseObject{
+       	class Shot extends BaseObject{
 
-		// コンストラクタ
+
 		public Shot()
 		{
 			super();
 		}
 
-		// 弾移動
+
 		public void Move()
 		{
 			if(!this.isEnable) return;
@@ -60,7 +45,7 @@ public class Fighter extends BaseObject{
 				this.Enable(false);
 		}
 
-		// 弾表示
+
 		public void Show(Graphics2D g2)
 		{
 			if(!this.isEnable) return;
@@ -100,29 +85,30 @@ public class Fighter extends BaseObject{
 	}
 
 
-	// このへん一緒の関数にも出来るけど名前の付け方めんどくさいので
+
 	public void Show(Graphics2D g2)
 	{
-		// ショット
+
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i].Show(g2);
 		}
 
-		// 自機
+
 		if(!isEnable) return;
 
 		g2.setPaint(Color.blue);
 		g2.fill(new Arc2D.Double( (int)fX - 55, (int)fY - 55, 110, 110, 250, 40, Arc2D.PIE));
 		g2.setPaint(Color.yellow);
-		g2.fill(new Arc2D.Double( (int)fX - 40, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
+                g2.fill(new Arc2D.Double( (int)fX - 40, (int)fY + 30, 10, 15, 0
+, 360, Arc2D.PIE));
 		g2.fill(new Arc2D.Double( (int)fX + 30, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
 	}
 
-	// 移動
+
 	public void Move()
 	{
-		// ショット
+
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i].Move();
@@ -154,29 +140,29 @@ public class Fighter extends BaseObject{
 	}
 
 
-	// ショット生成
+
 	public void Shoot()
 	{
 		if(!isEnable) return;
 
-		// ボタンおしっぱじゃなくてボタン最初に押した時
+
 		if(bKeyZ == KB_TRIG)
 		{
 			shotTimer = 0;
 		}
 
-		// ボタン押されとるかー？
+
 		if(bKeyZ == KB_PUSH)
 		{
-			// 2回に一回作るよ
+
 			if(shotTimer % 2 == 0)
 			{
 				if(numValidShot>=2)
 				{
-					// 2コ作りたいので
+
 					for(int i=0; i<2; i++)
 					{
-						// まず作れるやつあるかどうか見るよ
+
 						for(int j=0; j<numShot; j++)
 						{
 							if(shot[j].isEnable) continue;
@@ -194,7 +180,7 @@ public class Fighter extends BaseObject{
 	}
 
 
-	// ボタン押してるとき
+
 	public void KeyPressedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
@@ -219,7 +205,7 @@ public class Fighter extends BaseObject{
 		}
 	}
 
-	// ボタン離したとき
+
 	public void KeyReleasedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
@@ -244,7 +230,7 @@ public class Fighter extends BaseObject{
 		}
 	}
 
-	// ボタン押した瞬間
+
 	public void KeyTypedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
