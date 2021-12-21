@@ -77,7 +77,7 @@ public class EnemyManager {
 
 			_bullet[i].Move();
 
-			if(((_bullet[i].GetX() >= 530)||(_bullet[i].GetX() <= -50))||((_bullet[i].GetY() >= 690)||(_bullet[i].GetY() <= -50)))
+			if(((_bullet[i].GetX() >= 1000)||(_bullet[i].GetX() <= -50))||((_bullet[i].GetY() >= 1000)||(_bullet[i].GetY() <= -50)))
 				_bullet[i].Enable(false);
 		}
 	}

@@ -26,7 +26,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 		frame.getContentPane().add(app);
 		//各種フレームの設定
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setBounds(10, 10, 1000, 1000); 
+		frame.setBounds(10, 10, 1000, 800); 
 		frame.setTitle("Templete Shooting"); // 
 		frame.setVisible(true); // 
 
@@ -49,7 +49,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 		setForeground(Color.white);
 
 		if (buffer == null){
-			buffer = createImage(1000, 1000);
+			buffer = createImage(1000, 800);
 			bufferGraphics = buffer.getGraphics();
 		}
 
@@ -74,7 +74,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 			Graphics2D g2 = (Graphics2D) bufferGraphics;	//2D使うため
 
 			g2.setBackground(Color.black);
-			g2.clearRect(0, 0, 1000, 1000);
+			g2.clearRect(0, 0, 1000, 800);
 
 			//アンチエイリアシング
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -100,7 +100,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	//催秒が命令の際にはこれを頑張りなおす
 	public void paintComponent(Graphics g){
 			g.setColor(Color.black);
-			g.clearRect(0, 0, 1000, 1000);
+			g.clearRect(0, 0, 1000, 800);
 			g.drawImage(buffer, 0, 0, this);
 	}
 

@@ -110,10 +110,10 @@ public class Fighter extends BaseObject{
 		if(!isEnable) return;
 
 		g2.setPaint(Color.white);
-		g2.fill(new Arc2D.Double( (int)fX - 55, (int)fY - 55, 110, 110, 250, 40, Arc2D.PIE));
+		g2.fill(new Arc2D.Double( (int)fX - 55/2, (int)fY - 55/2, 110/2, 110/2, 250/2, 40/2, Arc2D.PIE));
 		g2.setPaint(Color.yellow);
-		g2.fill(new Arc2D.Double( (int)fX - 40, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
-		g2.fill(new Arc2D.Double( (int)fX + 30, (int)fY + 30, 10, 15, 0, 360, Arc2D.PIE));
+		g2.fill(new Arc2D.Double( (int)fX - 40/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
+		g2.fill(new Arc2D.Double( (int)fX + 30/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
 	}
 
 	// 移動
@@ -145,7 +145,7 @@ public class Fighter extends BaseObject{
 		}
 		else if(bKeyDown)
 		{
-			if(fY <= 1000)
+			if(fY <= 800)
 				fY += fVY;
 		}
 	}

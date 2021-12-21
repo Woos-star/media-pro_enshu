@@ -7,7 +7,9 @@ import java.awt.event.KeyEvent;
 public class TitleState implements ModeState{
 
 	private final static int START	= 0;
-	private final static int END		= 1;
+	private final static int CONTINUE		= 1;
+	private final static int END		= 2;
+
 	private int _cursorPos = START;
 
 	//メインタイトルの位置
@@ -61,6 +63,9 @@ public class TitleState implements ModeState{
 				case START:
 					gm.ChangeMode(new MainGameState());
 					break;
+				case CONTINUE:
+					gm.ChangeMode(new MainGameState());
+					break;
 				case END:
 					gm.ChangeMode(new ExitState());
 					break;
@@ -84,13 +89,22 @@ public class TitleState implements ModeState{
 		
 		g2.drawString("Game Start",MENUPOSX,MENUPOSY);
 
+		//Continue
+		if(_cursorPos == CONTINUE)
+			g2.setPaint(Color.green);
+		else
+			g2.setPaint(Color.yellow);
+		
+		g2.drawString("Continue",MENUPOSX,MENUPOSY+MENUINTVL);
+
+
 		//終わり
 		if(_cursorPos == END)
 			g2.setPaint(Color.green);
 		else
 			g2.setPaint(Color.yellow);
 
-		g2.drawString("Quit",MENUPOSX,MENUPOSY + MENUINTVL);
+		g2.drawString("Quit",MENUPOSX,MENUPOSY + 2*MENUINTVL);
 
 		// カーソル
 		g2.setPaint(Color.green);
@@ -99,8 +113,11 @@ public class TitleState implements ModeState{
 			case START:
 			g2.drawString("@",CURSOR,MENUPOSY);
 				break;
-			case END:
+			case CONTINUE:
 			g2.drawString("@",CURSOR,MENUPOSY + MENUINTVL);
+				break;	
+			case END:
+			g2.drawString("@",CURSOR,MENUPOSY + 2*MENUINTVL);
 				break;
 		}
 
