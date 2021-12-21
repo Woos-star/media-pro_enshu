@@ -1,13 +1,34 @@
+<<<<<<< HEAD
+=======
+/*
+ *作成2004/08/29
+ * この生成されたコメントの挿入されるテンプレ０とを変更するため
+ * window > 設定 > Java >　コード生成 > コードとコメント
+ */
+
+/**
+ * @author Administrator
+ *
+ */
+>>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 import java.awt.*;
 import java.awt.geom.*;
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
+<<<<<<< HEAD
 	private int m_Def;		
 	private int m_AppearTime;	
 	private int m_bulletType;	
 	private int m_bulletIntvl;	
 	private int m_bulletSpeed;	
+=======
+	private int m_Def;			// 防御力
+	private int m_AppearTime;	// 出現時間
+	private int m_bulletType;	// 弾タイプ
+	private int m_bulletIntvl;	// 発射間隔
+	private int m_bulletSpeed;	// 弾速度
+>>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 
 	public final static int BL_1WAY_MON	=	0;
 	public final static int BL_8WAY_ALL	= 	1;
@@ -73,7 +94,11 @@ public class Enemy extends BaseObject{
 			Enable(false);
 	}
 
+<<<<<<< HEAD
 	
+=======
+	//弾生成
+>>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void Fire()
 	{
 		if(!isEnable) return;
@@ -93,7 +118,11 @@ public class Enemy extends BaseObject{
 		g2.fill(new Ellipse2D.Double(fX - 10f, fY, 20f, 20f));
 	}
 
+<<<<<<< HEAD
 	
+=======
+	//狙い弾を生成
+>>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void CreateEimsBullet()
 	{
 		Fighter fighter = _manager.GetFighter();
