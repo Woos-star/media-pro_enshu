@@ -112,7 +112,7 @@ public class Enemy extends BaseObject{
 		if(!fighter.IsEnable()) return;
 		if(!isEnable) return;
 
-		if(fY > 240) return;
+		if(fY > 1000) return;
 
 		for(int i=0; i<EnemyManager.BULLET_MAX; i++)
 		{

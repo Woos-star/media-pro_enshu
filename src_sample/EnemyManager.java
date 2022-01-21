@@ -172,7 +172,8 @@ public class EnemyManager {
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
 				_enemy[i].DecreaseHP();
-				_fighter.Enable(false);
+
+				_fighter.DecresenLeft();
 				return true;
 			}
 		}
@@ -229,7 +230,7 @@ public class EnemyManager {
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
 				_bullet[i].Enable(false);
-				_fighter.Enable(false);
+				_fighter.DecresenLeft();
 				return true;
 			}
 		}		

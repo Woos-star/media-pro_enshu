@@ -14,21 +14,18 @@ public class ExitState implements ModeState{
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub	
 	}
 	
 	@Override
 	public void Show(Graphics2D g2) {
-		// TODO Auto-generated method stub
 		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 16));
 		g2.setPaint(Color.yellow);
-		g2.drawString("終わりはこのままアプレットウィンドウを閉じてください",10, 100);
-		g2.drawString("restartのキーはrです", 10,120);
+		g2.drawString("Xでタイトルに戻る",10, 100);
+		g2.drawString("restartのキーはr", 10,120);
 	}
 
 	@Override
 	public void run(GameManager gm) {
-		// TODO Auto-generated method stub
 		if(m_bKeyR) {
 			gm.ChangeMode(new MainGameState());
 		}else if (m_bKeyX){

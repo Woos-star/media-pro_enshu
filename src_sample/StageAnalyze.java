@@ -10,6 +10,10 @@ public class StageAnalyze {
 	private int _numStr = 0;		// 行数保存
 	public int GetStringNumber(){return _numStr;}
 
+	//private Boss _boss = new Boss;
+
+
+
 	private LinkedList<String[]> _tokenList;
 	public LinkedList<String[]> GetScenario(){return _tokenList;}
 	
@@ -39,6 +43,9 @@ public class StageAnalyze {
 					//ボスクラスをnewしてこのクラスで一時的にインスタンスを保持すればいいんじゃないかな？
 					//ボスクラスは階層構造にして破壊可能なパーズを持たせたりするとSTGっぽいよね
 					//今は未実装なので次へ
+
+
+
 					continue;
 				}
 

@@ -1,16 +1,15 @@
-/*
-
- *
- * s
- */
-
 /**
  * @author Administrator
  *
  */
+
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
+
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Fighter extends BaseObject{
 	protected int nLeft;	// 残機数
@@ -21,6 +20,7 @@ public class Fighter extends BaseObject{
 	protected boolean bKeyUp;
 	protected boolean bKeyDown;
 	protected int bKeyZ;
+	protected int bKeyP;
 
 	public final static int KB_NONE	=	0;
 	public final static int KB_TRIG	= 	1;
@@ -32,6 +32,18 @@ public class Fighter extends BaseObject{
 	private int shotTimer = 0;
 
 	private Shot shot[];
+
+	//Image image[];
+	private Image fighter = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //image
+	int imageWidth = image.getWidth(null);
+    int imageHeight = image.getHeight(null);
+	double ratio = 0.1
+ 
+	ratio = (double)newWidth/(double)imageWidth;
+	w = (int)(imageWidth * ratio);
+	h = (int)(imageHeight * ratio);
+
+
 
 	// 内部クラスかされた時期ショット管理クラス
 	// *戦闘機はショット生成だけを受け待ち。移動はショット自身が行う
@@ -64,14 +76,13 @@ public class Fighter extends BaseObject{
 
 			g2.setPaint(Color.white);
 			g2.fill(new Ellipse2D.Double(fX - 10f, fY - 10f, 10f, 20f));
-
 		}
 	}
 
 	public Fighter()
 	{
 		super();
-		nLeft = 0;
+		nLeft = 4;
 		bKeyLeft = bKeyRight = bKeyUp = bKeyDown =  false;
 
 		bKeyZ = KB_NONE;
@@ -83,6 +94,13 @@ public class Fighter extends BaseObject{
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i] = new Shot();
+		}
+	}
+
+	public void DecresenLeft(){
+		nLeft -= 1;
+		if(nLeft < 0) {
+			Enable (false);
 		}
 	}
 
@@ -109,11 +127,12 @@ public class Fighter extends BaseObject{
 		// 自機
 		if(!isEnable) return;
 
-		g2.setPaint(Color.white);
-		g2.fill(new Arc2D.Double( (int)fX - 55/2, (int)fY - 55/2, 110/2, 110/2, 250/2, 40/2, Arc2D.PIE));
-		g2.setPaint(Color.yellow);
-		g2.fill(new Arc2D.Double( (int)fX - 40/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
-		g2.fill(new Arc2D.Double( (int)fX + 30/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
+		// g2.setPaint(Color.white);
+		// g2.fill(new Arc2D.Double( (int)fX - 55/2, (int)fY - 55/2, 110/2, 110/2, 250/2, 40/2, Arc2D.PIE));
+		// g2.setPaint(Color.yellow);
+		// g2.fill(new Arc2D.Double( (int)fX - 40/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
+		// g2.fill(new Arc2D.Double( (int)fX + 30/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
+		g2.drawImage(fighter, (int)fX, (int)fY, null);
 	}
 
 	// 移動
@@ -213,6 +232,8 @@ public class Fighter extends BaseObject{
 		case KeyEvent.VK_Z:
 			bKeyZ	= KB_PUSH;
 			break;
+		case KeyEvent.VK_P:
+			bKeyP	= KB_PUSH;
 		}
 	}
 
@@ -241,7 +262,7 @@ public class Fighter extends BaseObject{
 		}
 	}
 
-	// s
+	// 
 	public void KeyTypedAnalyze(KeyEvent e)
 	{
 		if(!isEnable) return;
