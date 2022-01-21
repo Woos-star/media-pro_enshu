@@ -27,7 +27,7 @@ public class BaseObject {
 		return fY;
 	}
 
-	//
+	//returning false
 	public boolean IsEnable()
 	{
 		return isEnable;
@@ -35,20 +35,20 @@ public class BaseObject {
 
 	// データ設定用
 
-	//
+	//setting position
 	public void SetPos(float x, float y)
 	{
 		fX = x;
 		fY = y;
 	}
 
-	//
+	//setting velocity of x
 	public void SetVX(float x)
 	{
 		fVX = x;
 	}
 
-	//
+	//setting velocity of y
 	public void SetVY(float y)
 	{
 		fVY = y;
@@ -60,8 +60,8 @@ public class BaseObject {
 		isEnable = flag;
 	}
 
-	//主処理
-	
+	//if true return;
+	//else position に+ fVX or fVY
 	public void Move()
 	{
 		if(!this.isEnable) return;
@@ -70,7 +70,8 @@ public class BaseObject {
 		fY += fVY;
 	}
 
-	//
+	//true ->return 
+	//좀더 공부
 	public void Show(Graphics2D g2)
 	{
 		if(!isEnable) return;

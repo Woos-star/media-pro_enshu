@@ -8,8 +8,14 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
+import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.io.File;
+ 
+import javax.imageio.ImageIO;
+ 
 
 public class Fighter extends BaseObject{
 	protected int nLeft;	// 残機数
@@ -34,14 +40,16 @@ public class Fighter extends BaseObject{
 	private Shot shot[];
 
 	//Image image[];
-	private Image fighter = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //image
-	int imageWidth = image.getWidth(null);
-    int imageHeight = image.getHeight(null);
-	double ratio = 0.1
+	private Image fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //image
+	int imageWidth = fighterImage.getWidth(null);
+    int imageHeight = fighterImage.getHeight(null);
+	float w = (float)(imageWidth /20);
+	float h = (float)(imageHeight /20);
+	Image resizeImage = fighterImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
  
-	ratio = (double)newWidth/(double)imageWidth;
-	w = (int)(imageWidth * ratio);
-	h = (int)(imageHeight * ratio);
+    //BufferedImage newImage = new BufferedImage((int)w,(int) h, BufferedImage.TYPE_INT_RGB);
+    //g2.dispose();
+    //ImageIO.write(newImage, imgFormat, new File(imgTargetPath));
 
 
 
@@ -132,7 +140,8 @@ public class Fighter extends BaseObject{
 		// g2.setPaint(Color.yellow);
 		// g2.fill(new Arc2D.Double( (int)fX - 40/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
 		// g2.fill(new Arc2D.Double( (int)fX + 30/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
-		g2.drawImage(fighter, (int)fX, (int)fY, null);
+		//g2.drawImage(fighterImage, (int)fX, (int)fY, null);
+		g2.drawImage(resizeImage, (int)fX-20, (int)fY-20, null);
 	}
 
 	// 移動
