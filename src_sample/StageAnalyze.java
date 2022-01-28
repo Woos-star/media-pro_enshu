@@ -7,10 +7,12 @@ public class StageAnalyze {
 	public Enemy[] GetTemporaryEnemy(){return _enemy;}
 	private String[] _str = new String[100];		// 敵の数保存
 	private String[] _token = new String[10];		// 分割文字保存
-	private int _numStr = 0;		// 行数保存
+	private int _numStr = 0;						// 行数保存
 	public int GetStringNumber(){return _numStr;}
 
-	//private Boss _boss = new Boss;
+	//Bossの作成 start
+	private Boss _boss = new Boss;
+	public Boss GetTemporaryBoss(){return _boss;}
 
 
 
@@ -36,7 +38,7 @@ public class StageAnalyze {
 			//	とりあえず１行ずつ読む
 			while (buffererdReader.ready()){
 				// コメント　飛ばす
-				if((temp = buffererdReader.readLine()).startsWith("//")) continue;
+				if((temp = buffererdReader.readLine()).startsWith("//")) continue;		// //から開始　->飛ばす
 				// ボスの処理はここで解析
 				else if(temp.startsWith("*"))
 				{
@@ -44,9 +46,22 @@ public class StageAnalyze {
 					//ボスクラスは階層構造にして破壊可能なパーズを持たせたりするとSTGっぽいよね
 					//今は未実装なので次へ
 
-
-
 					continue;
+
+					//ボスの実装	
+					_str[_numStr] = temp;
+					st = new StringTokenizer(_str[_numStr],",");	// , によってdivde される
+					_token = new String[10];						//10 Strings
+					for(int i=0; st.hasMoreTokens(); i++) {			//return 할  token　あるなら　false ,else true
+						_token[i] = st.nextToken();
+					}
+					if(_token[0] != null)
+					{
+						_tokenList.add(_token);
+						_numStr++;
+					}
+
+
 				}
 
 				// ここから通常的
@@ -55,7 +70,7 @@ public class StageAnalyze {
 				// 分割する
 				st = new StringTokenizer(_str[_numStr],",");
 			
-				_token = new String[10];
+				_token = new String[10];	
 				// 分割したトークンを一時的に格納
 				for(int i=0; st.hasMoreTokens(); i++) {
 						_token[i] = st.nextToken();
@@ -100,6 +115,30 @@ public class StageAnalyze {
 	
 	public Enemy GetTemporaryEnemy(EnemyManager em, int num)
 	{
+		// 出現時間、出現座標(x,y）、速度（vx,vy） HP 防御力　弾発射間隔　弾体ぷ　弾速度
+
+		String[] tempString = _tokenList.get(num);
+		Enemy temp = new Enemy(em);
+		temp.SetAppearTime(new Integer(tempString[0]).intValue());
+		temp.SetPos((new Float(tempString[1]).floatValue()),(new Float(tempString[2]).floatValue()));
+		temp.SetVX(new Float(tempString[3]).floatValue());
+		temp.SetVY(new Float(tempString[4]).floatValue());
+		temp.SetHP(new Integer(tempString[5]).intValue());
+		temp.SetDEF(new Integer(tempString[6]).intValue());
+		//ここはstateパターンやstrategyパターンを使ってあらかじめ用意した状態を登録する形式にしてもいい...というかむしろその方がいい
+		temp.SetBulletIntvl(new Integer(tempString[7]).intValue());
+		temp.SetBulletType(new Integer(tempString[8]).intValue());
+		temp.SetBulletSpeed(new Integer(tempString[9]).intValue());
+	
+		return temp;
+	}
+
+	//Boss実装
+	
+	public Enemy GetTemporaryBoss(EnemyManager em, int num)
+	{
+		// 出現時間、出現座標(x,y）、速度（vx,vy） HP 防御力　弾発射間隔　弾体ぷ　弾速度
+
 		String[] tempString = _tokenList.get(num);
 		Enemy temp = new Enemy(em);
 		temp.SetAppearTime(new Integer(tempString[0]).intValue());

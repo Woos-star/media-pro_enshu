@@ -1,8 +1,4 @@
-/**
- * @author Administrator
- *
- */
-
+//
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -11,47 +7,43 @@ import java.awt.event.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import java.awt.image.BufferedImage;
-import java.io.File;
+// import java.awt.image.BufferedImage;
+// import java.io.File;
  
-import javax.imageio.ImageIO;
- 
+// import javax.imageio.ImageIO;
 
 public class Fighter extends BaseObject{
 	protected int nLeft;	// 残機数
 
 	// キー入力のフラグ
-	protected boolean bKeyLeft;
+	protected boolean bKeyLeft;			//キー操作
 	protected boolean bKeyRight;
 	protected boolean bKeyUp;
 	protected boolean bKeyDown;
 	protected int bKeyZ;
-	protected int bKeyP;
+	protected int bKeyP;				//p?? -> pause 実装
 
 	public final static int KB_NONE	=	0;
 	public final static int KB_TRIG	= 	1;
 	public final static int KB_PUSH	= 	2;
 	public final static int KB_PULL	=	3;
 
-	private int numShot;	// 画面表示ショット
-	private int numValidShot; // 現在作れるショット数
+	private int numShot;			// 画面表示	ショット
+	private int numValidShot; 		// 現在作れるショット数
 	private int shotTimer = 0;
 
 	private Shot shot[];
 
-	//Image image[];
-	private Image fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //image
-	int imageWidth = fighterImage.getWidth(null);
+	//ここからimageの修正
+
+	//Image image[]; -> 自機　変える
+	private Image fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //fighter のimage追加
+
+	int imageWidth = fighterImage.getWidth(null);	 //fighter の大きさ調節
     int imageHeight = fighterImage.getHeight(null);
 	float w = (float)(imageWidth /20);
 	float h = (float)(imageHeight /20);
 	Image resizeImage = fighterImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
- 
-    //BufferedImage newImage = new BufferedImage((int)w,(int) h, BufferedImage.TYPE_INT_RGB);
-    //g2.dispose();
-    //ImageIO.write(newImage, imgFormat, new File(imgTargetPath));
-
-
 
 	// 内部クラスかされた時期ショット管理クラス
 	// *戦闘機はショット生成だけを受け待ち。移動はショット自身が行う
@@ -68,7 +60,7 @@ public class Fighter extends BaseObject{
 		{
 			if(!this.isEnable) return;
 
-			if(fY >= 0)
+			if(fY >= 0)			//上の範囲見えなくなると動かない
 			{
 				fX += fVX;
 				fY += fVY;
@@ -84,6 +76,8 @@ public class Fighter extends BaseObject{
 
 			g2.setPaint(Color.white);
 			g2.fill(new Ellipse2D.Double(fX - 10f, fY - 10f, 10f, 20f));
+
+			//弾の　種類　変更
 		}
 	}
 
@@ -98,7 +92,7 @@ public class Fighter extends BaseObject{
 		numShot = 6;
 		numValidShot = 6;
 
-		shot = new Shot[numShot];
+		shot = new Shot[numShot];    // 6個　まで作る
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i] = new Shot();
@@ -106,7 +100,9 @@ public class Fighter extends BaseObject{
 	}
 
 	public void DecresenLeft(){
+
 		nLeft -= 1;
+
 		if(nLeft < 0) {
 			Enable (false);
 		}
@@ -122,8 +118,6 @@ public class Fighter extends BaseObject{
 		return numShot;
 	}
 
-
-	// この辺一緒の関数にもできるけど名前の付け方めんどくさいので
 	public void Show(Graphics2D g2)
 	{
 		// ショット
@@ -132,7 +126,6 @@ public class Fighter extends BaseObject{
 			shot[i].Show(g2);
 		}
 
-		// 自機
 		if(!isEnable) return;
 
 		// g2.setPaint(Color.white);

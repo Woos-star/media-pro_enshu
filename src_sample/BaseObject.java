@@ -1,3 +1,5 @@
+//座標、速度（ある物体のmove）、show（表示）のbase
+
 import java.awt.Graphics2D;
 
 //自機や敵キャラの基礎クラス

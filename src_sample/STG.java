@@ -15,6 +15,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 
 	public static Thread mainThread = null;
 	// エイン関数
+
 	public static void main(String args[])
 	{
 		//適当なJFrame用意
@@ -73,6 +74,8 @@ public class STG extends JPanel implements Runnable, KeyListener{
 
 			Graphics2D g2 = (Graphics2D) bufferGraphics;	//2D使うため
 
+
+
 			g2.setBackground(Color.black);
 			g2.clearRect(0, 0, 1000, 800);
 
@@ -99,6 +102,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	
 	//催秒が命令の際にはこれを頑張りなおす
 	public void paintComponent(Graphics g){
+
 			g.setColor(Color.black);
 			g.clearRect(0, 0, 1000, 800);
 			g.drawImage(buffer, 0, 0, this);

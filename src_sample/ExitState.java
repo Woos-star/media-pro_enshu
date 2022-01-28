@@ -1,3 +1,5 @@
+//
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -18,18 +20,23 @@ public class ExitState implements ModeState{
 	
 	@Override
 	public void Show(Graphics2D g2) {
-		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 16));
+
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 100));
+
+		g2.drawString("Game Over",200,300);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 30));
 		g2.setPaint(Color.yellow);
-		g2.drawString("Xでタイトルに戻る",10, 100);
-		g2.drawString("restartのキーはr", 10,120);
+		g2.drawString("X : Titleへ",400,400);
+		g2.drawString("R : Restart",400,440);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 16));
 	}
 
 	@Override
 	public void run(GameManager gm) {
 		if(m_bKeyR) {
-			gm.ChangeMode(new MainGameState());
+			gm.ChangeMode(new MainGameState());			// R 押 -> Title へ
 		}else if (m_bKeyX){
-			gm.ChangeMode(new TitleState());
+			gm.ChangeMode(new TitleState());			// X 押 -> Title へ
 		}
 	}
 

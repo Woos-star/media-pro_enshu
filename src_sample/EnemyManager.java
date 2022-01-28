@@ -1,31 +1,33 @@
+//　敵、Bullet 作り・move  + 判定（ (fighter,enemy)(fighter,enemy bullet),(enemy,fighter bullet)）
+
 import java.awt.Graphics2D;
 
 public class EnemyManager {
-	public final static int ENEMY_MAX	= 	10;
-	public final static int BULLET_MAX		=	30;
+	public final static int ENEMY_MAX	= 	10;			//画面に表示されるEnemyの数 MAX
+	public final static int BULLET_MAX		=	30;		//Enemy 一体が生成する（画面に表示する）BulletのMAX
 	
-	private Enemy[]	_enemy = new Enemy[ENEMY_MAX];
-	public Enemy[] GetEnemy(){return _enemy;}
-	private Bullet[] _bullet = new Bullet[BULLET_MAX];
-	public Bullet[] GetBullet(){ return _bullet;}
+	private Enemy[]	_enemy = new Enemy[ENEMY_MAX];		//Enemy配列
+	public Enemy[] GetEnemy(){return _enemy;}			//_enemy をget
+	private Bullet[] _bullet = new Bullet[BULLET_MAX];	//Bullet 配列
+	public Bullet[] GetBullet(){ return _bullet;}		//_bullet をget
 	
-	private Fighter _fighter = null;
-	public Fighter GetFighter(){return _fighter;}
+	private Fighter _fighter = null;					//_fighter = 無 
+	public Fighter GetFighter(){return _fighter;}		//_fighter をget
 	
-	private StageAnalyze _stage = null;
-	public StageAnalyze GetStage(){return _stage;}
+	private StageAnalyze _stage = null;					//_stage = 無
+	public StageAnalyze GetStage(){return _stage;}		//_stage をget
 	
-	private int _time = 0;
-	public int GetTime(){return _time;}
+	private int _time = 0;								//_time = 0 setting
+	public int GetTime(){return _time;}					//_time を get
 	
 	public EnemyManager(MainGameState main)
 	{
-		_fighter = main.GetFighter();
+		_fighter = main.GetFighter();			//fighterとstage はMainGameStateから　取得
 		_stage = main.GetStage();
-		init();
+		init();									//bullet　作り開始
 	}
 	
-	public void init()
+	public void init()							//Bullet を 作り
 	{		
 		for(int i=0;i<BULLET_MAX;i++)
 		{
@@ -33,14 +35,14 @@ public class EnemyManager {
 		}
 	}
 
-	public void update(int timer)
+	public void update(int timer)		//update 24 fps(多分？)		
 	{
-		_time = timer;
+		_time = timer;					//timer
 		
-		EnemyCreate();
-		BulletCreate();
+		EnemyCreate();					//敵
+		BulletCreate();					//bullet
 		
-		EnemyMove();
+		EnemyMove();					//enemy move
 		BulletMove();
 	}
 	
@@ -55,14 +57,14 @@ public class EnemyManager {
 	{
 		for(int i=0; i<ENEMY_MAX; i++)
 		{
-			if(_enemy[i] == null) return;
+			if(_enemy[i] == null) return;			//i がない　->moveしない
 
-			if(!_enemy[i].IsEnable()) continue;
+			if(!_enemy[i].IsEnable()) continue;		//i がない　->moveしない
 
 			_enemy[i].Move();
 
-			if(((_enemy[i].GetX() >= 530)||(_enemy[i].GetX() <= -50))||((_enemy[i].GetY() >= 690)||(_enemy[i].GetY() <= -50)))
-				_enemy[i].Enable(false);
+			if(((_enemy[i].GetX() >= 1050)||(_enemy[i].GetX() <= -50))||((_enemy[i].GetY() >= 1050)||(_enemy[i].GetY() <= -50))) 
+				_enemy[i].Enable(false);  //画面表示から見えない  Enemy !Enable
 		}
 	}
 
@@ -71,13 +73,13 @@ public class EnemyManager {
 	{
 		for(int i=0; i<BULLET_MAX; i++)
 		{
-			if(_bullet[i] == null) return;
+			if(_bullet[i] == null) return;		//bullet[i] なし->動作しない
 
-			if(!_bullet[i].IsEnable()) continue;
+			if(!_bullet[i].IsEnable()) continue;	//bullet[i] なし->動作しない
 
 			_bullet[i].Move();
 
-			if(((_bullet[i].GetX() >= 1000)||(_bullet[i].GetX() <= -50))||((_bullet[i].GetY() >= 1000)||(_bullet[i].GetY() <= -50)))
+			if(((_bullet[i].GetX() >= 1050)||(_bullet[i].GetX() <= -50))||((_bullet[i].GetY() >= 1050)||(_bullet[i].GetY() <= -50)))
 				_bullet[i].Enable(false);
 		}
 	}
@@ -85,13 +87,13 @@ public class EnemyManager {
 	public void EnemyCreate()
 	{
 		// 
-		for(int i=0; i<_stage.GetStringNumber(); i++)
+		for(int i=0; i<_stage.GetStringNumber(); i++)				//number
 		{
-			if(Integer.parseInt(_stage.GetScenario().get(i)[0]) == _time)
+			if(Integer.parseInt(_stage.GetScenario().get(i)[0]) == _time)		//	
 			{
 				for(int j=0; j<ENEMY_MAX; j++)
 				{
-					if(_enemy[j] == null)
+					if(_enemy[j] == null)			//enemy j がない
 					{
 						_enemy[j] = _stage.GetTemporaryEnemy(this,i);
 						_enemy[j].Enable(true);
@@ -112,10 +114,10 @@ public class EnemyManager {
 	{
 		for(int i=0; i<ENEMY_MAX; i++)
 		{
-			if(_enemy[i] == null) return;
+			if(_enemy[i] == null) return;			//enemy が存在しない
 			if(!_enemy[i].IsEnable()) continue;
 
-			_enemy[i].Fire();
+			_enemy[i].Fire();				//else Fire
 		}
 	}
 	
@@ -123,10 +125,10 @@ public class EnemyManager {
 	{
 		for(int i=0; i<ENEMY_MAX; i++)
 		{
-			if(_enemy[i] == null) return;
+			if(_enemy[i] == null) return;			//存在しない
 			if(!_enemy[i].IsEnable()) continue;
 			
-			_enemy[i].Show(g2);
+			_enemy[i].Show(g2);						//存在 - > show
 		}
 	}
 
@@ -147,19 +149,19 @@ public class EnemyManager {
 		boolean rtn = false;
 		
 		HitCheckEnemyAndShot();
-		rtn = HitCheckEnemyAndFighter() | HitCheckBulletAndFighter();
+		rtn = HitCheckEnemyAndFighter() | HitCheckBulletAndFighter();		//enemy とfighter の hit　,bullet とfighter の hit　check ->1
 		
-		return rtn;
+		return rtn;		//hit時 1 を返す
 	}
 
-	// 敵と自機の判定
+	// 敵、自機　判定
 	private boolean HitCheckEnemyAndFighter()
 	{
-		if(!_fighter.IsEnable()) return false;
+		if(!_fighter.IsEnable()) return false;			// Fighter X ->false
 
 		for(int i=0; i<ENEMY_MAX; i++)
 		{
-			if(_enemy[i] == null || !_enemy[i].IsEnable()) continue;
+			if(_enemy[i] == null || !_enemy[i].IsEnable()) continue;  //enemy X ->continue
 
 			float dx, dy, width, height;
 			
@@ -171,9 +173,9 @@ public class EnemyManager {
 
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
-				_enemy[i].DecreaseHP();
+				_enemy[i].DecreaseHP();				//enemy HP 減少
 
-				_fighter.DecresenLeft();
+				_fighter.DecresenLeft();			//fighter Decrease Hp
 				return true;
 			}
 		}
@@ -181,7 +183,7 @@ public class EnemyManager {
 		return false;
 	}
 
-	// 敵と自弾の判定
+	// 敵、自弾　判定
 	private void HitCheckEnemyAndShot()
 	{
 		for(int i=0;i<_fighter.GetNumShot();i++)
@@ -192,10 +194,11 @@ public class EnemyManager {
 			// 弾有効だったら敵全部と弾に関しての判定をする
 			for(int j=0;j<ENEMY_MAX;j++)
 			{
-				// 外面内に敵いなかったら飛ばす
-				if(_enemy[j] == null || !_enemy[j].IsEnable()) continue;
-					float dx, dy, width, height;
-				dx = _enemy[j].GetX() - _fighter.GetShot()[i].GetX() - 5;
+				
+				if(_enemy[j] == null || !_enemy[j].IsEnable()) continue; 			 // 画面内に敵いなかったら飛ばす
+				
+				float dx, dy, width, height;
+				dx = _enemy[j].GetX() - _fighter.GetShot()[i].GetX() - 5;			
 				dy = _enemy[j].GetY() - _fighter.GetShot()[i].GetY();
 
 				width = 50;
@@ -211,7 +214,7 @@ public class EnemyManager {
 		}
 	}
 
-	// 敵弾と自機の判定
+	// 敵弾、自機　判定
 	private boolean HitCheckBulletAndFighter()
 	{
 		if(!_fighter.IsEnable()) return false;

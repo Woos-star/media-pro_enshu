@@ -1,16 +1,8 @@
-/*
- *作成2004/08/29
- * この生成されたコメントの挿入されるテンプレ０とを変更するため
- * window > 設定 > Java >　コード生成 > コードとコメント
- */
-
-/**
- * @author Administrator
- *
- */
+//Enemy
 
 import java.awt.*;
 import java.awt.geom.*;
+//Provides the Java 2D classes for defining and performing operations on objects related to two-dimensional geometry
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
@@ -20,24 +12,24 @@ public class Enemy extends BaseObject{
 	private int m_bulletIntvl;	// 発射間隔
 	private int m_bulletSpeed;	// 弾速度
 
-	public final static int BL_1WAY_MON	=	0;
-	public final static int BL_8WAY_ALL	= 	1;
-	public final static int BL_3WAY_FAN	= 	2;
-	public final static int KB_2WAY_DI	=	3;
+	public final static int BL_1WAY_MON	=	0;			// bullet 種類 1way  
+	public final static int BL_8WAY_ALL	= 	1;			// bullet 種類 8way  
+	public final static int BL_3WAY_FAN	= 	2;			// bullet 種類 3way  
+	public final static int KB_2WAY_DI	=	3;			// bullet 種類 2way  
 	
-	private EnemyManager _manager = null;
+	private EnemyManager _manager = null; // EnemyManager 使用
 	
 	public Enemy(EnemyManager em)
 	{
-		super();
-		m_HP = 0;
+		super(); 							// BaseObject.BaseObject()
+		m_HP = 0;							//初期化
 		m_Def = 0;
 		m_AppearTime = 0;
 		m_bulletType = 0;
 		m_bulletIntvl = 0;
 		m_bulletSpeed = 0;
 	
-		_manager = em;
+		_manager = em;					//Enemmy.Enemy(EnemyManager == em)
 	}
 
 
@@ -78,7 +70,7 @@ public class Enemy extends BaseObject{
 
 	public void DecreaseHP()
 	{
-		m_HP -= (10 - m_Def);
+		m_HP -= (10 - m_Def);	//基本 当たると　10 減る
 
 		if(m_HP < 0)
 			Enable(false);
@@ -87,13 +79,13 @@ public class Enemy extends BaseObject{
 	//弾生成
 	public void Fire()
 	{
-		if(!isEnable) return;
+		if(!isEnable) return;		//if 存在しない
 
-		if(_manager.GetTime() % m_bulletIntvl == 0)
+		if(_manager.GetTime() % m_bulletIntvl == 0)		//if あるintervalすぎた-> またfire
 			CreateEimsBullet();
 	}
 
-	public void Show(Graphics2D g2)
+	public void Show(Graphics2D g2)				//敵の形
 	{
 		if(!isEnable) return;
 
@@ -105,19 +97,19 @@ public class Enemy extends BaseObject{
 	}
 
 	//狙い弾を生成
-	public void CreateEimsBullet()
+	public void CreateEimsBullet() 				///ここ修正->いろいろな角度のbullet 現在　狙い弾
 	{
-		Fighter fighter = _manager.GetFighter();
-		Bullet[] bullet = _manager.GetBullet();
+		Fighter fighter = _manager.GetFighter();		//Fighter 情報
+		Bullet[] bullet = _manager.GetBullet();			//Bullet は　配列（多数）
 		
-		if(!fighter.IsEnable()) return;
-		if(!isEnable) return;
+		if(!fighter.IsEnable()) return;					//if　Fighter 存在しない
+		if(!isEnable) return;							//if　Fighter 存在しない
 
-		if(fY > 1000) return;
+		if(fY > 1000) return;							//座標　1000すぎた（見えなくなった）-> Bullet生成しない
 
-		for(int i=0; i<EnemyManager.BULLET_MAX; i++)
+		for(int i=0; i<EnemyManager.BULLET_MAX; i++)		//bullet 数は　Maxまで -> boss max数　いじる必要 -> enemy managerで
 		{
-			if(bullet[i].isEnable) continue;
+			if(bullet[i].isEnable) continue;		//if bullet[i] が存在している　→ 次のやつ生成
 
 			float dx, dy, d, speed;
 
