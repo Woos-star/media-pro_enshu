@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  *作成2004/08/29
  * この生成されたコメントの挿入されるテンプレ０とを変更するため
@@ -10,25 +8,23 @@
  * @author Administrator
  *
  */
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.util.Random;
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
-<<<<<<< HEAD
-	private int m_Def;		
-	private int m_AppearTime;	
-	private int m_bulletType;	
-	private int m_bulletIntvl;	
-	private int m_bulletSpeed;	
-=======
 	private int m_Def;			// 防御力
 	private int m_AppearTime;	// 出現時間
 	private int m_bulletType;	// 弾タイプ
 	private int m_bulletIntvl;	// 発射間隔
 	private int m_bulletSpeed;	// 弾速度
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 
 	public final static int BL_1WAY_MON	=	0;
 	public final static int BL_8WAY_ALL	= 	1;
@@ -36,7 +32,16 @@ public class Enemy extends BaseObject{
 	public final static int KB_2WAY_DI	=	3;
 	
 	private EnemyManager _manager = null;
+
+	private Image EnemyImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/ufo.png")).getImage(); //image
+	int imageWidth = EnemyImage.getWidth(null);
+    int imageHeight = EnemyImage.getHeight(null);
+	float w = (float)(imageWidth /5);
+	float h = (float)(imageHeight /5);
+	Image resizeImage = EnemyImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
 	
+	
+
 	public Enemy(EnemyManager em)
 	{
 		super();
@@ -86,19 +91,19 @@ public class Enemy extends BaseObject{
 		m_bulletSpeed = Speed;
 	}
 
-	public void DecreaseHP()
+	public void DecreaseHP(int damage)
 	{
-		m_HP -= (10 - m_Def);
+		m_HP -= (damage - m_Def);
 
 		if(m_HP < 0)
 			Enable(false);
 	}
+	public int GetHP()           ////////////////
+    {
+        return m_HP;
+    }
 
-<<<<<<< HEAD
-	
-=======
 	//弾生成
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void Fire()
 	{
 		if(!isEnable) return;
@@ -107,22 +112,22 @@ public class Enemy extends BaseObject{
 			CreateEimsBullet();
 	}
 
+	
+
 	public void Show(Graphics2D g2)
 	{
 		if(!isEnable) return;
 
-		g2.setPaint(Color.blue);
-		g2.fill(new Ellipse2D.Double(fX - 20f, fY - 10f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX - 10f, fY - 20f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX, fY - 10f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX - 10f, fY, 20f, 20f));
+		//Random random = new Random();
+		//int a = random.nextInt(10);
+		//if(a > 4)
+		g2.drawImage(resizeImage, (int)fX-20, (int)fY-20, null);		
+//else g2.drawImage(resizeImage2, (int)fX-20, (int)fY-20, null);		
 	}
-
-<<<<<<< HEAD
 	
-=======
+
+
 	//狙い弾を生成
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void CreateEimsBullet()
 	{
 		Fighter fighter = _manager.GetFighter();
@@ -131,7 +136,7 @@ public class Enemy extends BaseObject{
 		if(!fighter.IsEnable()) return;
 		if(!isEnable) return;
 
-		if(fY > 240) return;
+		if(fY > 1000) return;
 
 		for(int i=0; i<EnemyManager.BULLET_MAX; i++)
 		{

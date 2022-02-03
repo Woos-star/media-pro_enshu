@@ -2,38 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-<<<<<<< HEAD
-public class STG extends JPanel implements Runnable, KeyListener{
 
-	public static Thread mainThread = null;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
-	public static void main(String args[])
-	{
-
-		JFrame frame = new JFrame();
-
-
-		STG app = new STG();
-
-		frame.getContentPane().add(app);
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setBounds(10, 10, 480, 640); 
-		frame.setTitle("Templete Shooting");
-		frame.setVisible(true);
-
-		
-		mainThread = new Thread(app);
-		
-		
-		app.init();
-	}
-	
-
-	private GameManager _gmanager;
-
-
-=======
 // ここはMVCで言えば、VとC
 
 // MVCの観点で組むとすると
@@ -47,7 +20,20 @@ public class STG extends JPanel implements Runnable, KeyListener{
 
 	public static Thread mainThread = null;
 	// エイン関数
+
+
+	
+//背景挿入テスト
+private Image BackgroundImage = new ImageIcon(MainGameState.class.getResource("../src_sample/ImageFile/img_1b138001c63d21f1d60d2e5af54d558d3376810.jpg")).getImage(); //image
+int imageWidth = BackgroundImage.getWidth(null);
+int imageHeight = BackgroundImage.getHeight(null);
+float w = (float)(1.3*imageWidth);
+float h = (float)(2*imageHeight);
+Image resizeImage = BackgroundImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
+
+
 	public static void main(String args[])
+
 	{
 		//適当なJFrame用意
 		JFrame frame = new JFrame();
@@ -59,7 +45,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 		//各種フレームの設定
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		frame.setBounds(10, 10, 1000, 800); 
-		frame.setTitle("Templete Shooting"); // 
+		frame.setTitle("SHOOTING GAME"); // 
 		frame.setVisible(true); // 
 
 		//メインスレッド化
@@ -73,12 +59,11 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	private GameManager _gmanager;
 
 	// 描画対象バッファ
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	private Image buffer;
 	private Graphics bufferGraphics;
 	
 	public void init(){
-		setBackground(Color.black);
+		setBackground(Color.white);
 		setForeground(Color.white);
 
 		if (buffer == null){
@@ -95,45 +80,24 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	}
 
 
-<<<<<<< HEAD
-
-	public void run(){
-		while (true){
-			try{
-				Thread.sleep(20);	
-=======
 	//スレッドで動く関数かもしれない
 	public void run(){
 		while (true){
 			try{
 				Thread.sleep(20);	//FPS調整・・・でも処理落ちしてるからあんま関数ねえっぽ
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 			}catch (InterruptedException e){
 				break;
 			}
-
-<<<<<<< HEAD
-			Graphics2D g2 = (Graphics2D) bufferGraphics;
-
-			g2.setBackground(Color.red);
-			g2.clearRect(0, 0, 480, 640);
-
 			
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setStroke(new BasicStroke(4.0f));
-
-			
-			_gmanager.GameMainUpdate();	
-			
-			
-			ShowObjects(g2);
-			
-			
-=======
 			Graphics2D g2 = (Graphics2D) bufferGraphics;	//2D使うため
+
 
 			g2.setBackground(Color.black);
 			g2.clearRect(0, 0, 1000, 800);
+			g2.drawImage(resizeImage, 0, 0, null);
+			
+			
+
 
 			//アンチエイリアシング
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -146,40 +110,27 @@ public class STG extends JPanel implements Runnable, KeyListener{
 			ShowObjects(g2);
 			
 			//リペイント
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 			repaint();
 		}
 	}
 
-<<<<<<< HEAD
-
-=======
 	// 描画命令
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void ShowObjects(Graphics2D g2)
 	{
+		
 		_gmanager.State().Show(g2);
+		
 	}
 	
-<<<<<<< HEAD
-
-	public void paintComponent(Graphics g){
-           		g.setColor(Color.black);
-			g.clearRect(0, 0, 480, 640);
-			g.drawImage(buffer, 0, 0, this);
-	}
-
-	
-=======
 	//催秒が命令の際にはこれを頑張りなおす
 	public void paintComponent(Graphics g){
-			g.setColor(Color.black);
+		//g2.drawImage(resizeImage, 0, 0, null);
+			g.setColor(Color.red);
 			g.clearRect(0, 0, 1000, 800);
 			g.drawImage(buffer, 0, 0, this);
 	}
 
 	//入力系。状態により切り替える
->>>>>>> dacef5f1118d9b38c6adef21a2948c04bd463309
 	public void keyPressed(KeyEvent e){
 		_gmanager.State().KeyPressed(e);
 	}

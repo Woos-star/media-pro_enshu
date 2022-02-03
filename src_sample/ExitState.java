@@ -1,3 +1,5 @@
+//
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -8,31 +10,47 @@ import java.awt.event.KeyEvent;
 public class ExitState implements ModeState{
 
 	private boolean m_bKeyR;
+
+	private int _score = 0;
+	public void SetScore(int score){
+		_score = score;
+	}
+	
 	public void KeyR(boolean on){m_bKeyR = on;}
 	private boolean m_bKeyX;
 	public void KeyX(boolean on){m_bKeyX = on;}	
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub	
 	}
 	
 	@Override
 	public void Show(Graphics2D g2) {
-		// TODO Auto-generated method stub
-		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 16));
+
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 100));
+
+		g2.setPaint(Color.red);
+		g2.drawString("Game Over",200,300);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 30));
 		g2.setPaint(Color.yellow);
-		g2.drawString("終わりはこのままアプレットウィンドウを閉じてください",10, 100);
-		g2.drawString("restartのキーはrです", 10,120);
+
+		g2.setPaint(Color.green);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 50));
+		g2.drawString("Score: " +  new Integer(_score).toString(), 400, 380); 
+
+		g2.setPaint(Color.yellow);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 30));
+		g2.drawString("X : タイトルへ",400,440);
+		g2.drawString("R : もう一度プレイする",400,480);
+		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 16));
 	}
 
 	@Override
 	public void run(GameManager gm) {
-		// TODO Auto-generated method stub
 		if(m_bKeyR) {
-			gm.ChangeMode(new MainGameState());
+			gm.ChangeMode(new MainGameState());			// R 押 -> Title へ
 		}else if (m_bKeyX){
-			gm.ChangeMode(new TitleState());
+			gm.ChangeMode(new TitleState());			// X 押 -> Title へ
 		}
 	}
 
