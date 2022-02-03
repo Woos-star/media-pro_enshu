@@ -94,7 +94,7 @@ public class Fighter extends BaseObject{
 	public Fighter()
 	{
 		super();
-		nLeft = 5;
+		nLeft = 50;
 		score = 0;
 		damage = 10;
 		bKeyLeft = bKeyRight = bKeyUp = bKeyDown =  false;
