@@ -2,11 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-// ここはMVCで言えば、VとC
-
-// MVCの観点で組むとすると
-// Mはゲーム全体の状態とそれに対する処理を管理するゲームmanager
-// VはJPanelでの表示。GameManagerの状態に応じて処理をする
+// VとC
+// Mはゲーム全体の状態とそれに対する処理を管理するgamemanager
+// VはJPanelでの表示。　GameManagerの状態に応じて処理をする
 // どうせキー入力なんでcもJPanelにKeyListenerを入れて頑張ってもらう
 // GameManagerには状態を持たせ、それを切り替えさせる
 // stateパターンにまとめれば入力系もスッキリ
@@ -14,25 +12,29 @@ import javax.swing.*;
 public class STG extends JPanel implements Runnable, KeyListener{
 
 	public static Thread mainThread = null;
-	// エイン関数
+	//背景挿入テスト
+	private Image BackgroundImage = new ImageIcon(MainGameState.class.getResource("../src_sample/ImageFile/img_1b138001c63d21f1d60d2e5af54d558d3376810.jpg")).getImage(); //image
+	int imageWidth = BackgroundImage.getWidth(null);
+	int imageHeight = BackgroundImage.getHeight(null);
+	float w = (float)(1.35*imageWidth);
+	float h = (float)(2*imageHeight);
+	Image resizeImage = BackgroundImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
 
 	public static void main(String args[])
 	{
-		//適当なJFrame用意
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame();				//frame	
 
-		//メインパネル（シューティングを実行するパネル）を新規作成
+		//メインパネルを新規作成
 		STG app = new STG();
 		//フレームに登録
 		frame.getContentPane().add(app);
 		//各種フレームの設定
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		frame.setBounds(10, 10, 1000, 800); 
-		frame.setTitle("Templete Shooting"); // 
+		frame.setTitle("SHOOTING GAME"); //
 		frame.setVisible(true); // 
 
-		//メインスレッド化
-		mainThread = new Thread(app);
+		mainThread = new Thread(app);			//STG appをmain thread
 		
 		//設定終わったのでメインパネル初期化して開始
 		app.init();
@@ -47,10 +49,10 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	
 	public void init(){
 		setBackground(Color.black);
-		setForeground(Color.white);
+		setForeground(Color.black);
 
 		if (buffer == null){
-			buffer = createImage(1000, 800);
+			buffer = createImage(1000, 1000);
 			bufferGraphics = buffer.getGraphics();
 		}
 
@@ -76,8 +78,9 @@ public class STG extends JPanel implements Runnable, KeyListener{
 
 
 
-			g2.setBackground(Color.black);
-			g2.clearRect(0, 0, 1000, 800);
+			//g2.setBackground(Color.black);
+			//g2.clearRect(0, 0, 1000, 1000);
+			g2.drawImage(resizeImage, 0, 0, null);
 
 			//アンチエイリアシング
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -103,7 +106,7 @@ public class STG extends JPanel implements Runnable, KeyListener{
 	//催秒が命令の際にはこれを頑張りなおす
 	public void paintComponent(Graphics g){
 
-			g.setColor(Color.black);
+			g.setColor(Color.red);
 			g.clearRect(0, 0, 1000, 800);
 			g.drawImage(buffer, 0, 0, this);
 	}

@@ -1,15 +1,20 @@
 //　敵、Bullet 作り・move  + 判定（ (fighter,enemy)(fighter,enemy bullet),(enemy,fighter bullet)）
 
 import java.awt.Graphics2D;
+import java.util.concurrent.ThreadLocalRandom; 
+import java.util.Random;
 
 public class EnemyManager {
 	public final static int ENEMY_MAX	= 	10;			//画面に表示されるEnemyの数 MAX
 	public final static int BULLET_MAX		=	30;		//Enemy 一体が生成する（画面に表示する）BulletのMAX
-	
+	public final static int ITEM_MAX = 2;
+
 	private Enemy[]	_enemy = new Enemy[ENEMY_MAX];		//Enemy配列
 	public Enemy[] GetEnemy(){return _enemy;}			//_enemy をget
 	private Bullet[] _bullet = new Bullet[BULLET_MAX];	//Bullet 配列
 	public Bullet[] GetBullet(){ return _bullet;}		//_bullet をget
+	private Item[] _item = new Item[ITEM_MAX]; ////////////
+    public Item[] GetItem(){return _item;} /////////////
 	
 	private Fighter _fighter = null;					//_fighter = 無 
 	public Fighter GetFighter(){return _fighter;}		//_fighter をget
@@ -19,6 +24,7 @@ public class EnemyManager {
 	
 	private int _time = 0;								//_time = 0 setting
 	public int GetTime(){return _time;}					//_time を get
+	private int t1,t2,t3,t4;
 	
 	public EnemyManager(MainGameState main)
 	{
@@ -33,23 +39,36 @@ public class EnemyManager {
 		{
 			_bullet[i] = new Bullet();
 		}
+		for(int i=0;i<ITEM_MAX;i++) /////////////
+        {                           /////////////
+            _item[i] = new Item();  /////////////
+        }                    
+		       /////////////
 	}
 
 	public void update(int timer)		//update 24 fps(多分？)		
 	{
-		_time = timer;					//timer
-		
-		EnemyCreate();					//敵
-		BulletCreate();					//bullet
-		
-		EnemyMove();					//enemy move
+		_time = timer;					//timer         
+        if(_time==t3+3){              //////////
+            _fighter.SetImage1();
+        }
+        if(_time==t4+100 & t4 > 0){             //////////
+            _fighter.DecreaseDamage();
+        }
+		EnemyCreate();
+		BulletCreate();
+		ItemCreate();
+
+		EnemyMove();
 		BulletMove();
+		ItemMove();
 	}
 	
 	public void Show(Graphics2D g2)
 	{
 		EnemyShow(g2);
 		BulletShow(g2);
+		ItemShow(g2);       /////////////
 	}
 	
 	// 敵移動
@@ -68,6 +87,22 @@ public class EnemyManager {
 		}
 	}
 
+	public void ItemMove()            /////////////////
+    {
+        for(int i=0; i<ITEM_MAX; i++)
+        {
+            if(_item[i] == null) return;
+ 
+            if(!_item[i].IsEnable()) continue;
+ 
+            _item[i].Move();
+ 
+            if(((_item[i].GetX() >= 1000)||(_item[i].GetX() <= -50))||((_item[i].GetY() >= 1000)||(_item[i].GetY() <= -50)))
+                _item[i].Enable(false);
+        }
+    }
+
+
 	// 弾移動
 	public void BulletMove()
 	{
@@ -84,6 +119,8 @@ public class EnemyManager {
 		}
 	}
  
+	
+
 	public void EnemyCreate()
 	{
 		// 
@@ -96,18 +133,47 @@ public class EnemyManager {
 					if(_enemy[j] == null)			//enemy j がない
 					{
 						_enemy[j] = _stage.GetTemporaryEnemy(this,i);
+						_enemy[j].SetHP(30);
 						_enemy[j].Enable(true);
 						break;
 					}	
 					else if(_enemy[j].IsEnable()) continue;
 
 					_enemy[j] = _stage.GetTemporaryEnemy(this,i);
+					_enemy[j].SetHP(30);
 					_enemy[j].Enable(true);
 					break;
 				}
 			}
 		}
 	}
+
+	public void ItemCreate(){          /////////////////
+        if(_time % 200 == 0)
+        {
+            int randomnumber1 = ThreadLocalRandom.current().nextInt(100);
+            t1 = _time + randomnumber1;
+			int randomnumber2 = ThreadLocalRandom.current().nextInt(100);
+            t2 = _time + randomnumber2;
+        }
+        if(_time == t1)
+        {
+                _item[0].SetVX(8);
+                _item[0].SetVY(8);
+                _item[0].SetPos(0,0);
+                _item[0].Enable(true);
+		}
+			if(_time == t2)
+			{
+				    _item[1].SetImage();
+					_item[1].SetVX(-8);
+					_item[1].SetVY(8);
+					_item[1].SetPos(930,0);
+					_item[1].Enable(true);
+			}
+	}
+
+
 
 	// 敵ショット
 	public void BulletCreate()
@@ -142,15 +208,26 @@ public class EnemyManager {
 			_bullet[i].Show(g2);
 		}
 	}
+
+	public void ItemShow(Graphics2D g2)        //////////////
+    {
+        for(int i=0; i<ITEM_MAX; i++)
+        {
+            if(_item[i] == null) return;
+            if(!_item[i].IsEnable()) continue;
+
+            _item[i].Show(g2);
+        }
+    }
+
+
 	
 	//
 	public boolean HitCheck()
 	{
 		boolean rtn = false;
 		
-		HitCheckEnemyAndShot();
-		rtn = HitCheckEnemyAndFighter() | HitCheckBulletAndFighter();		//enemy とfighter の hit　,bullet とfighter の hit　check ->1
-		
+		rtn = HitCheckEnemyAndShot() | HitCheckItemAndFighter() | HitCheckEnemyAndFighter() | HitCheckBulletAndFighter();
 		return rtn;		//hit時 1 を返す
 	}
 
@@ -173,18 +250,48 @@ public class EnemyManager {
 
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
-				_enemy[i].DecreaseHP();				//enemy HP 減少
+				_enemy[i].Enable(false);
+				_fighter.DecresenLeft();
+				_fighter.SetImage2();
+				t3 = _time;
 
-				_fighter.DecresenLeft();			//fighter Decrease Hp
 				return true;
 			}
 		}
 			
 		return false;
 	}
+	private boolean HitCheckItemAndFighter()          ////////////////
+    {
+        if(!_fighter.IsEnable()) return false;
+
+        for(int i=0; i<ITEM_MAX; i++)
+        {
+            if(_item[i] == null || !_item[i].IsEnable()) continue;
+
+            float dx, dy, width, height;
+
+            dx = _item[i].GetX() - _fighter.GetX();
+            dy = _item[i].GetY() - _fighter.GetY() - 23;
+
+            width  = 30;
+            height = 70;
+
+            if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
+            {
+                _item[i].Enable(false);
+                if(i==0){ _fighter.IncreasenLeft(); }      
+                else{ _fighter.IncreaseDamage(); t4 = _time;}  
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 	// 敵、自弾　判定
-	private void HitCheckEnemyAndShot()
+	private boolean HitCheckEnemyAndShot()
 	{
 		for(int i=0;i<_fighter.GetNumShot();i++)
 		{
@@ -206,12 +313,16 @@ public class EnemyManager {
 
 				if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 				{
-					_enemy[j].DecreaseHP();
+					_enemy[j].DecreaseHP(_fighter.GetDamage());
+					if(_enemy[j].GetHP()<0){ _fighter.IncreaseScore(1);
+
+					}
 					_fighter.GetShot()[i].Enable(false);
-					break;
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
 	// 敵弾、自機　判定
@@ -226,14 +337,16 @@ public class EnemyManager {
 			dx = _bullet[i].GetX() - _fighter.GetX();
 			dy = _bullet[i].GetY() - _fighter.GetY() - 23;
 
-			width = 20/2;
-			height = 28/2;
+			width = 20;
+			height = 28;
 
 			// 当たりました
 			if((Math.abs(dx) <= width)&&(Math.abs(dy) <= height))
 			{
 				_bullet[i].Enable(false);
 				_fighter.DecresenLeft();
+				_fighter.SetImage2();        ////////////
+                t3 = _time;  
 				return true;
 			}
 		}		

@@ -1,8 +1,9 @@
-//Enemy
+//Enemyの基本設定 + EnemyのBullet 実装
 
 import java.awt.*;
 import java.awt.geom.*;
-//Provides the Java 2D classes for defining and performing operations on objects related to two-dimensional geometry
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Enemy extends BaseObject{
 	private int	m_HP;
@@ -11,6 +12,13 @@ public class Enemy extends BaseObject{
 	private int m_bulletType;	// 弾タイプ
 	private int m_bulletIntvl;	// 発射間隔
 	private int m_bulletSpeed;	// 弾速度
+
+	private Image EnemyImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/ufo.png")).getImage(); 
+	int imageWidth = EnemyImage.getWidth(null);	 
+    int imageHeight = EnemyImage.getHeight(null);
+	float w = (float)(imageWidth/6 );
+	float h = (float)(imageHeight/6 );
+	Image resizeImage = EnemyImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
 
 	public final static int BL_1WAY_MON	=	0;			// bullet 種類 1way  
 	public final static int BL_8WAY_ALL	= 	1;			// bullet 種類 8way  
@@ -68,32 +76,37 @@ public class Enemy extends BaseObject{
 		m_bulletSpeed = Speed;
 	}
 
-	public void DecreaseHP()
+	public void DecreaseHP(int damage)
 	{
-		m_HP -= (10 - m_Def);	//基本 当たると　10 減る
+		m_HP -= (damage - m_Def);
 
 		if(m_HP < 0)
 			Enable(false);
 	}
+	public int GetHP()           ////////////////
+    {
+        return m_HP;
+    }
 
 	//弾生成
 	public void Fire()
 	{
 		if(!isEnable) return;		//if 存在しない
 
-		if(_manager.GetTime() % m_bulletIntvl == 0)		//if あるintervalすぎた-> またfire
+		if(_manager.GetTime() % m_bulletIntvl == 0)		//if あるintervalすぎた-> またfire (短い)
+
 			CreateEimsBullet();
 	}
 
-	public void Show(Graphics2D g2)				//敵の形
+	public void Show(Graphics2D g2)
 	{
 		if(!isEnable) return;
 
-		g2.setPaint(Color.green);
-		g2.fill(new Ellipse2D.Double(fX - 20f, fY - 10f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX - 10f, fY - 20f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX, fY - 10f, 20f, 20f));
-		g2.fill(new Ellipse2D.Double(fX - 10f, fY, 20f, 20f));
+		//Random random = new Random();
+		//int a = random.nextInt(10);
+		//if(a > 4)
+		g2.drawImage(resizeImage, (int)fX-20, (int)fY-20, null);		
+//else g2.drawImage(resizeImage2, (int)fX-20, (int)fY-20, null);		
 	}
 
 	//狙い弾を生成
@@ -113,18 +126,18 @@ public class Enemy extends BaseObject{
 
 			float dx, dy, d, speed;
 
-			dx = fighter.GetX() - fX;
+			dx = fighter.GetX() - fX;				//比率で投げるため
 			dy = fighter.GetY() + 23 - fY;
 
 			speed = this.m_bulletSpeed;
 
-			d = (float)Math.sqrt(dx*dx + dy*dy);
+			d = (float)Math.sqrt(dx*dx + dy*dy);   	//距離
 
 			bullet[i].SetPos(fX, fY);
-			bullet[i].SetVX((dx/d)*speed);
+			bullet[i].SetVX((dx/d)*speed);			//比率（三角形）投げる	
 			bullet[i].SetVY((dy/d)*speed);
 
-			bullet[i].Enable(true);
+			bullet[i].Enable(true);					//bullet[i] -> とうとう生成　1個
 
 			break;
 		}

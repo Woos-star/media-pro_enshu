@@ -1,4 +1,8 @@
-//
+/**
+ * @author Administrator
+ *
+ */
+
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -7,43 +11,51 @@ import java.awt.event.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-// import java.awt.image.BufferedImage;
-// import java.io.File;
+import java.awt.image.BufferedImage;
+import java.io.File;
  
-// import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;
+ 
 
 public class Fighter extends BaseObject{
 	protected int nLeft;	// 残機数
+	protected int score;
+	protected int damage;
+	protected Color color = Color.white;
 
 	// キー入力のフラグ
-	protected boolean bKeyLeft;			//キー操作
+	protected boolean bKeyLeft;
 	protected boolean bKeyRight;
 	protected boolean bKeyUp;
 	protected boolean bKeyDown;
 	protected int bKeyZ;
-	protected int bKeyP;				//p?? -> pause 実装
+	protected int bKeyP;
 
 	public final static int KB_NONE	=	0;
 	public final static int KB_TRIG	= 	1;
 	public final static int KB_PUSH	= 	2;
 	public final static int KB_PULL	=	3;
 
-	private int numShot;			// 画面表示	ショット
-	private int numValidShot; 		// 現在作れるショット数
+	private int numShot;	// 画面表示ショット
+	private int numValidShot; // 現在作れるショット数
 	private int shotTimer = 0;
 
 	private Shot shot[];
+	private BGM _bgm;
 
-	//ここからimageの修正
-
-	//Image image[]; -> 自機　変える
-	private Image fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/plane_test.jpeg")).getImage(); //fighter のimage追加
-
-	int imageWidth = fighterImage.getWidth(null);	 //fighter の大きさ調節
+	//Image image[];
+	private Image fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/20190424011056.png")).getImage(); //image
+	int imageWidth = fighterImage.getWidth(null);
     int imageHeight = fighterImage.getHeight(null);
-	float w = (float)(imageWidth /20);
-	float h = (float)(imageHeight /20);
+	float w = (float)(imageWidth /10);
+	float h = (float)(imageHeight/10);
 	Image resizeImage = fighterImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
+ 
+    //BufferedImage newImage = new BufferedImage((int)w,(int) h, BufferedImage.TYPE_INT_RGB);
+    //g2.dispose();
+    //ImageIO.write(newImage, imgFormat, new File(imgTargetPath));
+
+
 
 	// 内部クラスかされた時期ショット管理クラス
 	// *戦闘機はショット生成だけを受け待ち。移動はショット自身が行う
@@ -60,7 +72,7 @@ public class Fighter extends BaseObject{
 		{
 			if(!this.isEnable) return;
 
-			if(fY >= 0)			//上の範囲見えなくなると動かない
+			if(fY >= 0)
 			{
 				fX += fVX;
 				fY += fVY;
@@ -74,17 +86,17 @@ public class Fighter extends BaseObject{
 		{
 			if(!this.isEnable) return;
 
-			g2.setPaint(Color.white);
+			g2.setPaint(color);
 			g2.fill(new Ellipse2D.Double(fX - 10f, fY - 10f, 10f, 20f));
-
-			//弾の　種類　変更
 		}
 	}
 
 	public Fighter()
 	{
 		super();
-		nLeft = 4;
+		nLeft = 50;
+		score = 0;
+		damage = 10;
 		bKeyLeft = bKeyRight = bKeyUp = bKeyDown =  false;
 
 		bKeyZ = KB_NONE;
@@ -92,7 +104,7 @@ public class Fighter extends BaseObject{
 		numShot = 6;
 		numValidShot = 6;
 
-		shot = new Shot[numShot];    // 6個　まで作る
+		shot = new Shot[numShot];
 		for(int i=0; i<numShot; i++)
 		{
 			shot[i] = new Shot();
@@ -100,14 +112,51 @@ public class Fighter extends BaseObject{
 	}
 
 	public void DecresenLeft(){
-
+		_bgm = new BGM();
+		_bgm.start2();
 		nLeft -= 1;
-
-		if(nLeft < 0) {
+		if(nLeft == 0) {
 			Enable (false);
 		}
 	}
 
+	public void IncreasenLeft()      ///////////
+    {
+		_bgm = new BGM();
+		_bgm.start3();
+        nLeft += 1;
+    }
+
+	public int GetnLeft()      /////////////
+    {
+        return nLeft;
+    }
+
+	public void IncreaseScore(int num)   /////////////
+    {
+        score += num;
+		
+    }
+    public int GetScore()          ///////////
+    {
+        return score;
+    }
+    public void IncreaseDamage()     //////////
+    {
+		_bgm = new BGM();
+		_bgm.start4();
+        damage += 10;
+        color = Color.RED;
+    }
+public void DecreaseDamage()     //////////
+    {
+        damage -= 10;
+        color = Color.WHITE;
+    }
+    public int GetDamage()           /////////////
+    {
+        return damage;
+    }
 	public Shot[] GetShot()
 	{
 		return shot;
@@ -118,6 +167,19 @@ public class Fighter extends BaseObject{
 		return numShot;
 	}
 
+	public void SetImage1()            ///////////
+    {
+        fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/20190424011056.png")).getImage();
+        resizeImage = fighterImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
+    }
+    public void SetImage2()       //////////////
+    {
+        fighterImage = new ImageIcon(Fighter.class.getResource("../src_sample/ImageFile/20190424011056-1.png")).getImage();
+        resizeImage = fighterImage.getScaledInstance((int)w, (int)h, Image.SCALE_SMOOTH);
+    }
+
+
+	// この辺一緒の関数にもできるけど名前の付け方めんどくさいので
 	public void Show(Graphics2D g2)
 	{
 		// ショット
@@ -126,6 +188,7 @@ public class Fighter extends BaseObject{
 			shot[i].Show(g2);
 		}
 
+		// 自機
 		if(!isEnable) return;
 
 		// g2.setPaint(Color.white);
@@ -135,6 +198,7 @@ public class Fighter extends BaseObject{
 		// g2.fill(new Arc2D.Double( (int)fX + 30/2, (int)fY + 30/2, 10/2, 15/2, 0, 360/2, Arc2D.PIE));
 		//g2.drawImage(fighterImage, (int)fX, (int)fY, null);
 		g2.drawImage(resizeImage, (int)fX-20, (int)fY-20, null);
+		
 	}
 
 	// 移動

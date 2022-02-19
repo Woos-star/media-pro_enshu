@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import javax.swing.border.*;
+import java.awt.Dimension;
+import javax.swing.*;
 
 
 public class TitleState implements ModeState{
@@ -9,12 +12,14 @@ public class TitleState implements ModeState{
 	private final static int START	= 0;
 	private final static int CONTINUE		= 1;
 	private final static int END		= 2;
+	private static int x = 0;
 
 	private int _cursorPos = START;
+	private BGM _bgm;
 
 	//メインタイトルの位置
-	private final static int TITLEPOSX	= 400;
-	private final static int TITLEPOSY	= 150;
+	private final static int TITLEPOSX	= 220;
+	private final static int TITLEPOSY	= 160;
 
 	//メインメニュー表示位置。表示間隔。カーソル位置（x座標のみ）
 	private final static int MENUPOSX		= 400;
@@ -61,10 +66,15 @@ public class TitleState implements ModeState{
 			switch(_cursorPos)
 			{
 				case START:
-					gm.ChangeMode(new MainGameState());
+					gm.ChangeMode(new MainGameState(1));
+					if(x == 0){
+						_bgm = new BGM();
+						_bgm.start1();
+						x = x+1;
+					}
 					break;
 				case CONTINUE:
-					gm.ChangeMode(new MainGameState());
+					gm.ChangeMode(new MainGameState(2));
 					break;
 				case END:
 					gm.ChangeMode(new ExitState());
@@ -75,27 +85,28 @@ public class TitleState implements ModeState{
 
 	@Override
 	public void Show(Graphics2D g2) {
-		g2.setFont(new Font("Arial", Font.BOLD, 28));
+		g2.setFont(new Font("MS　ゴシック", Font.ITALIC, 70));
 
 		//タイトル
-		g2.setPaint(Color.yellow);
-		g2.drawString("Templete Shooting",TITLEPOSX,TITLEPOSY);
+		g2.setPaint(Color.cyan);
+
+		g2.drawString("SHOOTING GAME",TITLEPOSX,TITLEPOSY);
 
 		//スタート
+		g2.setFont(new Font("Arial", Font.BOLD, 28));
 		if(_cursorPos == START)
 			g2.setPaint(Color.green);
 		else
 			g2.setPaint(Color.yellow);
 		
-		g2.drawString("Game Start",MENUPOSX,MENUPOSY);
+		g2.drawString("難易度1",MENUPOSX,MENUPOSY);
 
 		//Continue
 		if(_cursorPos == CONTINUE)
 			g2.setPaint(Color.green);
 		else
 			g2.setPaint(Color.yellow);
-		
-		g2.drawString("Continue",MENUPOSX,MENUPOSY+MENUINTVL);
+		g2.drawString("難易度2",MENUPOSX,MENUPOSY+MENUINTVL);
 
 
 		//終わり
@@ -104,27 +115,27 @@ public class TitleState implements ModeState{
 		else
 			g2.setPaint(Color.yellow);
 
-		g2.drawString("Quit",MENUPOSX,MENUPOSY + 2*MENUINTVL);
+			g2.drawString("やめる",MENUPOSX,MENUPOSY + 2*MENUINTVL);
 
 		// カーソル
 		g2.setPaint(Color.green);
 		switch(_cursorPos)
 		{
 			case START:
-			g2.drawString("@",CURSOR,MENUPOSY);
+			g2.drawString("→",CURSOR,MENUPOSY);
 				break;
 			case CONTINUE:
-			g2.drawString("@",CURSOR,MENUPOSY + MENUINTVL);
+			g2.drawString("→",CURSOR,MENUPOSY + MENUINTVL);
 				break;	
 			case END:
-			g2.drawString("@",CURSOR,MENUPOSY + 2*MENUINTVL);
+			g2.drawString("→",CURSOR,MENUPOSY + 2*MENUINTVL);
 				break;
 		}
 
 		//操作表示
-		g2.setPaint(Color.yellow);
+		g2.setPaint(Color.red);
 		g2.setFont(new Font("MS　ゴシック", Font.BOLD, 20));
-		g2.drawString("↑↓キーでカーソル移動。決定", 50,600);
+		g2.drawString("↑↓キーでカーソル移動。zで決定", 350,600);
 	}
 	
 	@Override
